@@ -205,25 +205,25 @@
 			if ($row["Bone_Amount"] > 0){
 				echo "<b>Bone:</b> <a href='$boneurl' target='_blank'>". str_replace("Bone", "", makePretty($row["Bone_Type"])). "</a> ". number_format($row["Bone_Amount"])." <br />";
 			} else {
-				echo "Bone: None<br />";
+				echo "<b>Bone:</b> None<br />";
 			}
 			
 			if ($row["Hide_Amount"] > 0){
 				echo "<b>Hide:</b>  <a href='$hideurl' target='_blank'>". str_replace("Hide", "", makePretty($row["Hide_Type"])). "</a> ". number_format($row["Hide_Amount"])." <br />";
 			} else {
-				echo "Hide: None<br />";
+				echo "<b>Hide:</b> None<br />";
 			}
 			
 			if ($row["Meat_Amount"] > 0){
 				echo "<b>Meat:</b>  <a href='$meaturl' target='_blank'>". str_replace("Meat", "", makePretty($row["Meat_Type"])). "</a> ". number_format($row["Meat_Amount"])." <br />";
 			} else {
-				echo "Meat: None<br />";
+				echo "<b>Meat:</b> None<br />";
 			}
 			
 			if ($row["Milk_Amount"] > 0){
 				echo "<b>Milk:</b>  <a href='$milkurl' target='_blank'>". str_replace("Milk", "", makePretty($row["Milk_Type"])). "</a> ". number_format($row["Milk_Amount"])." <br /><br />";
 			} else {
-				echo "Milk: None<br /><br />";
+				echo "<b>Milk:</b> None<br /><br />";
 			}
 			
 			if ($row["Taming_Chance"] > 0) {
