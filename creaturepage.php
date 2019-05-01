@@ -172,10 +172,59 @@
 				echo "<b>Stalks Prey:</b> No<br /><br />";
 			}
 			
-			echo "<b>Bone:</b> ". str_replace("Bone", "", makePretty($row["Bone_Type"])). " ". number_format($row["Bone_Amount"])." <br />";
-			echo "<b>Hide:</b> ". str_replace("Hide", "", makePretty($row["Hide_Type"])). " ". number_format($row["Hide_Amount"])." <br />";
-			echo "<b>Meat:</b> ". str_replace("Meat", "", makePretty($row["Meat_Type"])). " ". number_format($row["Meat_Amount"])." <br />";
-			echo "<b>Milk:</b> ". str_replace("Milk", "", makePretty($row["Milk_Type"])). " ". number_format($row["Milk_Amount"])." <br /><br />";
+			// Galaxy Harvester links
+			$ghurl = "http://galaxyharvester.net/resourceList.py?planet=";
+			
+			if ($row["Planet"] == "Corellia"){
+				$ghurl = $ghurl. "1";
+			} else if ($row["Planet"] == "Dantooine"){
+				$ghurl = $ghurl. "2";
+			} else if ($row["Planet"] == "Dathomir"){
+				$ghurl = $ghurl. "3";
+			} else if ($row["Planet"] == "Endor"){
+				$ghurl = $ghurl. "4";
+			} else if ($row["Planet"] == "Lok"){
+				$ghurl = $ghurl. "5";
+			} else if ($row["Planet"] == "Naboo"){
+				$ghurl = $ghurl. "6";
+			} else if ($row["Planet"] == "Rori"){
+				$ghurl = $ghurl. "7";
+			} else if ($row["Planet"] == "Talus"){
+				$ghurl = $ghurl. "8";
+			} else if ($row["Planet"] == "Tatooine"){
+				$ghurl = $ghurl. "9";
+			} else if ($row["Planet"] == "Yavin"){
+				$ghurl = $ghurl. "10";
+			} 
+			
+			$boneurl = $ghurl. "&rgroup=creature_resources&rtype=". $row["Bone_Type"]. "_". strtolower($row["Planet"]);
+			$hideurl = $ghurl. "&rgroup=creature_resources&rtype=". $row["Hide_Type"]. "_". strtolower($row["Planet"]);
+			$meaturl = $ghurl. "&rgroup=creature_resources&rtype=". $row["Meat_Type"]. "_". strtolower($row["Planet"]);
+			$milkurl = $ghurl. "&rgroup=creature_resources&rtype=". $row["Milk_Type"]. "_". strtolower($row["Planet"]);
+			
+			if ($row["Bone_Amount"] > 0){
+				echo "<b>Bone:</b> <a href='$boneurl' target='_blank'>". str_replace("Bone", "", makePretty($row["Bone_Type"])). "</a> ". number_format($row["Bone_Amount"])." <br />";
+			} else {
+				echo "Bone: None<br />";
+			}
+			
+			if ($row["Hide_Amount"] > 0){
+				echo "<b>Hide:</b>  <a href='$hideurl' target='_blank'>". str_replace("Hide", "", makePretty($row["Hide_Type"])). "</a> ". number_format($row["Hide_Amount"])." <br />";
+			} else {
+				echo "Hide: None<br />";
+			}
+			
+			if ($row["Meat_Amount"] > 0){
+				echo "<b>Meat:</b>  <a href='$meaturl' target='_blank'>". str_replace("Meat", "", makePretty($row["Meat_Type"])). "</a> ". number_format($row["Meat_Amount"])." <br />";
+			} else {
+				echo "Meat: None<br />";
+			}
+			
+			if ($row["Milk_Amount"] > 0){
+				echo "<b>Milk:</b>  <a href='$milkurl' target='_blank'>". str_replace("Milk", "", makePretty($row["Milk_Type"])). "</a> ". number_format($row["Milk_Amount"])." <br /><br />";
+			} else {
+				echo "Milk: None<br /><br />";
+			}
 			
 			if ($row["Taming_Chance"] > 0) {
 				echo "<b>Tamable:</b> Yes<br />";
