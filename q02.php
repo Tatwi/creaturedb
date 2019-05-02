@@ -1,10 +1,9 @@
 <div class="question">
-	<form action="q2a.php" method="post">
+	<form action="a02.php" method="post">
 	What's the easiest way to collect  
 	<select name="resource">
 		<option value="bone_avian">Avian Bone</option>
 		<option value="bone_mammal">Mammalian Bone</option>
-
 		<option value="hide_bristley">Bristley Hide</option>
 		<option value="hide_leathery">Leathery Hide</option>
 		<option value="hide_scaley">Scaley Hide</option>
@@ -18,7 +17,7 @@
 		<option value="meat_wild">Wild Meat</option>
 	</select>
 	using 
-	<select name="planet">
+	<select name="damage">
 		<option value="Kinetic">Kinetic</option>
 		<option value="Energy">Energy</option>
 		<option value="Blast">Blast</option>
