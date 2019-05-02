@@ -33,8 +33,6 @@
 	$dbname = "creatures";
 	$restype = "";
 	$qnty = "";
-	
-	
 
 	if (strpos($_POST["resource"], 'hide') !== false) {
 		$restype = "Hide_Type";
@@ -55,8 +53,8 @@
 		die("Connection failed: " . $conn->connect_error);
 	}
 	
-	//Example: SELECT Creature_Name, Planet, Hide_Amount, Missions_Available, Base_HAM, Kinetic FROM Tarkin_Creatures WHERE Hide_Type='hide_leathery' AND Kinetic < 20;
-	$sql = "SELECT Creature_Name, Planet, ". $qnty. ", Missions_Available, Base_HAM, ". $_POST["damage"]. " FROM Tarkin_Creatures WHERE ". $restype. "='". $_POST["resource"]. "' AND ". $_POST["damage"]. " < 20";
+	//Example: SELECT Creature_Name, Planet, Hide_Amount, Missions_Available, Base_HAM, Kinetic FROM Tarkin_Creatures WHERE Hide_Type='hide_leathery' AND Kinetic < 20 AND PVP_Bitmask NOT LIKE '%AGGRESSIVE%' AND Creature_Bitmask NOT LIKE '%KILLER%' AND Creature_BitMask NOT LIKE '%PACK%';
+	$sql = "SELECT Creature_Name, Planet, ". $qnty. ", Missions_Available, Base_HAM, ". $_POST["damage"]. " FROM Tarkin_Creatures WHERE ". $restype. "='". $_POST["resource"]. "' AND ". $_POST["damage"]. " < 20 AND PVP_Bitmask NOT LIKE '%AGGRESSIVE%' AND Creature_Bitmask NOT LIKE '%KILLER%' AND Creature_BitMask NOT LIKE '%PACK%'";
 	$result = $conn->query($sql);
 	$answer = array();
 	$answercntr = 0;
@@ -73,90 +71,93 @@
 	
 	$conn->close();
 	
-	// Find the best targets
-	$bestcreature = "";
-	$bestplanet = "";
-	$bestamount = 1;
-	$bestham = 100000;
-	$bestresist = 100000;
-	$mission = "";
-		
-	$bestresults = array();
-	$bestresultscntr = 0;
-	for ($x = 0; $x < $answercntr; $x++) {
-		if ($answer[$x][$qnty] >= $bestamount && $answer[$x][$_POST["damage"]] <= $bestresist && $answer[$x]["Missions_Available"] == "Yes"){
-			$skip = false;
-			
-			/*
-			for ($y = 0; $y < count($bestresults); $y++) {
-				if ($bestresults[$y][$qnty] >= $answer[$x][$qnty] && $bestresults[$y]["Base_HAM"] <= $answer[$x]["Base_HAM"]){
-					echo "farts ". $answer[$x]["Creature_Name"]. "<br />";
-					$skip = true;
-				}
-			}*/
-			
-			// Ignore if worse than existing entry
-			if ($skip){
-				continue;
-			}
-
-			$bestcreature = $answer[$x]["Creature_Name"];
-			$bestplanet = $answer[$x]["Planet"];
-			$bestamount = $answer[$x][$qnty];
-			$bestham = $answer[$x]["Base_HAM"];
-			$bestresist = $answer[$x][$_POST["damage"]];
-			$mission = $answer[$x]["Missions_Available"];
-
-			$bestresults[$bestresultscntr] = $answer[$x];
-			$bestresultscntr++;
+	$answersize = count($answer);
+	$tmpeasy = 0;
+	$tmpeff = 0;
+	$tmpeffvalue = 0;
+	$tmpmost = 0;
+	
+	// Gather Data
+	for ($x = 0; $x < $answersize; $x++){
+		// Easiest: Lowest HAM without resists
+		if ($answer[$x]["Base_HAM"] < $answer[$tmpeasy]["Base_HAM"] && $answer[$x][$_POST["damage"]] < 1){
+			$tmpeasy = $x;
 		}
-	}
+		//---- END
 	
-	$arrlength = count($bestresults);
-	$bestqntyindex = 0;
-	$besthamindex = 0;
+		// Most Units Per Kill: Largests Quantity
+		if ($answer[$x][$qnty] > $answer[$tmpmost][$qnty]){
+			$tmpmost = $x;
+		}
+		//---- END
 	
-	for ($x = 0; $x < $arrlength; $x++) {
-		if ($bestresults[$x][$qnty] > $bestresults[$bestqntyindex][$qnty]){
-			$bestqntyindex = $x;
+		// Most Efficient: Highest Units / HAM
+		$ham = $answer[$x]["Base_HAM"];
+		
+		// Increase HAM due to resist value
+		if ($answer[$x][$_POST["damage"]] > 0){
+			$ham += $ham / 2 + ($ham * $answer[$x][$_POST["damage"]] /  100);
 		}
 		
-		if ($bestresults[$x]["Base_HAM"] < $bestresults[$besthamindex]["Base_HAM"]){
-			$besthamindex = $x;
+		// unitsPerMinute = units * creaturesPerMission / (AvgMinutes + (resistAdjustedHAM * creaturesPerMission / aSensiblConstantValue))
+		// unitsPerMinute = units * 15 / (3 + (resistAdjustedHAM * 15 / 65000))
+		$current = $answer[$x][$qnty];
+		$eff = floor($current * 15 / (3 + ($ham * 15 / 65000)));
+		
+		// Save units / minute value to array
+		$answer[$x]["Units_Per_Minute"] = $eff;
+		
+		if ($eff > $tmpeffvalue){
+			$tmpeffvalue = $eff;
+			$tmpeff = $x;
 		}
+		//---- END
 	}
 	
-	// Make sure this is the lowest ham version of the best resource quanity critter
-	for ($x = 0; $x < $answercntr; $x++) {
-		if ($bestresults[$bestqntyindex][$qnty] == $answer[$x][$qnty] && $bestresults[$bestqntyindex]["Base_HAM"] > $answer[$x]["Base_HAM"]){
-			$bestresults[$bestqntyindex] = $answer[$x];
-		}
-	}
-
-	// Print results
-	echo "<p><b>Lowest HAM, Highest Quantity:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Missions</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th></tr>";
-	$resistvalue = resistPretty($bestresults[$besthamindex][$_POST["damage"]]);
-	echo "<tr><td>". makePretty($bestresults[$besthamindex]["Creature_Name"]). "</td><td>". $bestresults[$besthamindex]["Planet"]. "</td><td>". number_format($bestresults[$besthamindex][$qnty]). "</td><td>". $bestresults[$besthamindex]["Missions_Available"]. "</td><td>". $resistvalue. "</td><td>". number_format($bestresults[$besthamindex]["Base_HAM"]). "</td></tr>";
+	// Print Results
+	echo "<pre>Due to the nature of the question, these results exclude animals that are aggressive, that will assist each other, or that will death blow.</pre>";
+	
+	$easist = $answer[$tmpeasy];
+	echo "<p><b>Easiest:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Missions</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th><th>Units/Minute</th></tr>";
+	$resistvalue = resistPretty($easist[$_POST["damage"]]);
+	echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $easist["Creature_Name"] . "\")'>". makePretty($easist["Creature_Name"]). "</a></td><td>". $easist["Planet"]. "</td><td>". number_format($easist[$qnty]). "</td><td>". $easist["Missions_Available"]. "</td><td>". $resistvalue. "</td><td>". number_format($easist["Base_HAM"]). "</td><td>". number_format($easist["Units_Per_Minute"]). "</td></tr>";
 	echo "</table><br />";
 	
-	echo "<p><b>Highest Quantity:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Missions</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th></tr>";
-	$resistvalue = resistPretty($bestresults[$bestqntyindex][$_POST["damage"]]);
-	echo "<tr><td>". makePretty($bestresults[$bestqntyindex]["Creature_Name"]). "</td><td>". $bestresults[$bestqntyindex]["Planet"]. "</td><td>". number_format($bestresults[$bestqntyindex][$qnty]). "</td><td>". $bestresults[$bestqntyindex]["Missions_Available"]. "</td><td>". $resistvalue. "</td><td>". number_format($bestresults[$bestqntyindex]["Base_HAM"]). "</td></tr>";
-	echo "</table><br /><br />";
+	$efficient = $answer[$tmpeff];
+	echo "<p><b>Most Effecient:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Missions</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th><th>Units/Minute</th></tr>";
+	$resistvalue = resistPretty($efficient[$_POST["damage"]]);
+	echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $efficient["Creature_Name"] . "\")'>". makePretty($efficient["Creature_Name"]). "</a></td><td>". $efficient["Planet"]. "</td><td>". number_format($efficient[$qnty]). "</td><td>". $efficient["Missions_Available"]. "</td><td>". $resistvalue. "</td><td>". number_format($efficient["Base_HAM"]). "</td><td>". number_format($efficient["Units_Per_Minute"]). "</td></tr>";
+	echo "</table><br />";
 	
-	echo "<p><b>Everything of Note:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Missions</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th></tr>";
-	for ($x = 0; $x < $answercntr; $x++) {
-		if ($answer[$x][$qnty] >= $bestresults[$besthamindex][$qnty]){
+	$mostperkill = $answer[$tmpmost];
+	echo "<p><b>Largest Quanity Per Kill:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Missions</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th><th>Units/Minute</th></tr>";
+	$resistvalue = resistPretty($mostperkill[$_POST["damage"]]);
+	echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $mostperkill["Creature_Name"] . "\")'>". makePretty($mostperkill["Creature_Name"]). "</a></td><td>". $mostperkill["Planet"]. "</td><td>". number_format($mostperkill[$qnty]). "</td><td>". $mostperkill["Missions_Available"]. "</td><td>". $resistvalue. "</td><td>". number_format($mostperkill["Base_HAM"]). "</td><td>". number_format($mostperkill["Units_Per_Minute"]). "</td></tr>";
+	echo "</table><br />";
+	
+	echo "<p><b>Everything of Note:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Missions</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th><th>Units/Minute</th></tr>";
+	for ($x = 0; $x < $answersize; $x++) {
+		if ($answer[$x][$qnty] >= $easist[$qnty]){
 			$resistvalue = resistPretty($answer[$x][$_POST["damage"]]);
-			echo "<tr><td>". makePretty($answer[$x]["Creature_Name"]). "</td><td>". $answer[$x]["Planet"]. "</td><td>". number_format($answer[$x][$qnty]). "</td><td>". $answer[$x]["Missions_Available"]. "</td><td>". $resistvalue. "</td><td>". number_format($answer[$x]["Base_HAM"]). "</td></tr>";
+			echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td><td>". $answer[$x]["Planet"]. "</td><td>". number_format($answer[$x][$qnty]). "</td><td>". $answer[$x]["Missions_Available"]. "</td><td>". $resistvalue. "</td><td>". number_format($answer[$x]["Base_HAM"]). "</td><td>". number_format($answer[$x]["Units_Per_Minute"]). "</td></tr>";
 		}
 	}
 	echo "</table><br /><br />";
-	
 	
 	?>
 	
-	<pre><a href="index.php">Back to main page ...</a></pre>
+	<pre>
+	Calculations for estimated values:
+	
+	if resistValue > 0 
+		resistAdjustedHAM += ham / 2 + (ham * resistValue /  100)
+	else
+		resistAdjustedHAM = baseHam
+		
+	unitsPerMinute = units * 15 / (3 + (resistAdjustedHAM * 15 / 65000))
+		
+	<a href="index.php">Back to main page ...</a>
+	</pre>
 </div>
 
 <?php include("design-bottom.php"); ?>
