@@ -1,6 +1,6 @@
 <div class="question">
 	<form action="a05.php" method="post">
-		What creatures can I tame with Taming Vicious Creatures 
+		What aggressive creatures can I tame with Taming Vicious Creatures 
 		<select name="skill">
 		<?php 
 			for ($x = 10; $x <= 75; $x++) {
