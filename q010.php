@@ -1,5 +1,5 @@
 <div class="question">
-	<form action="a10.php" method="post">
+	<form action="a010.php" method="post">
 		What can I sample DNA from that has 
 		<select name="attack">
 			<option value="creatureareacombo">Area Combo</option>
