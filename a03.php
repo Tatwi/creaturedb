@@ -31,7 +31,7 @@
 		die("Connection failed: " . $conn->connect_error);
 	}
 	
-	$sql = "SELECT Creature_Name, Planet, Level, Mount, Missions_Available FROM Tarkin_Creatures WHERE Taming_Chance > 0 AND Level < 13";
+	$sql = "SELECT Creature_Name, Planet, Level, Mount, Missions_Available FROM Tarkin_Creatures WHERE Taming_Chance > 0 AND Level < 13 AND PVP_Bitmask NOT LIKE '%AGGRESSIVE%' ORDER BY Planet, length(Level) ASC, Level ASC";
 	$result = $conn->query($sql);
 	$answer = array();
 	$answercntr = 0;
