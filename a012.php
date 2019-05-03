@@ -16,7 +16,7 @@
 		return ucwords(strtolower(str_replace("_", " ", $value)));
 	}
 	
-	echo "<h2>Which creatures are only usable by Creature Handlers? </h2>";
+	echo "<h2>What animal missions give the most XP on ". $_POST["planet"]. " when using ". $_POST["damage"]. " damage?</h2>";
 	
 	$servername = "localhost";
 	$username = "rob";
@@ -30,8 +30,8 @@
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	}
-	
-	$sql = "SELECT Planet, Creature_Name, Level, Mount, PVP_Bitmask FROM Tarkin_Creatures WHERE CH_Only = 'Yes' ORDER BY Planet, length(Level), Level";
+	// Example: SELECT Planet, Creature_Name, Level, Base_XP FROM Tarkin_Creatures WHERE Missions_Available LIKE 'Yes' AND Planet LIKE 'Corellia' AND Kinetic < 20 ORDER BY Planet, length(Base_XP) DESC, Base_XP DESC;
+	$sql = "SELECT Planet, Creature_Name, Level, Base_XP, ". $_POST["damage"]. " FROM Tarkin_Creatures WHERE Missions_Available LIKE 'Yes' AND Planet LIKE '". $_POST["planet"]. "' AND ". $_POST["damage"]. " <= 10 ORDER BY Planet, length(Base_XP) DESC, Base_XP DESC";
 	$result = $conn->query($sql);
 	$answer = array();
 	$answercntr = 0;
@@ -49,15 +49,16 @@
 	$conn->close();
 	
 	$answersize = count($answer);
-	$aggressive = "No";
 
-	echo "<table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Level</th><th>Aggressive</th><th>Mountable</th></tr>";
+	echo "<table border='1'><tr><th>Creature Name</th><th>Level</th><th>". $_POST["damage"]." Resistance</th><th>XP Amount</th></tr>";
 	for ($x = 0; $x < $answersize; $x++) {
-		if (strpos($answer[$x]["PVP_Bitmask"], 'AGGRESSIVE') !== false) {
-			$aggressive = "Yes";
+		$resist = "Vulnerable";
+		
+		if($answer[$x][$_POST["damage"]] > 0){
+			$resist = number_format($answer[$x][$_POST["damage"]]);
 		}
-			
-		echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td><td>". $answer[$x]["Planet"]. "</td><td>". number_format($answer[$x]["Level"]). "</td><td>". $aggressive. "</td><td>". $answer[$x]["Mount"]. "</td></tr>";
+		
+		echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td><td>". number_format($answer[$x]["Level"]). "</td><td>". $resist. "</td><td>". number_format($answer[$x]["Base_XP"]). "</td></tr>";
 	}
 	echo "</table><br />";
 	

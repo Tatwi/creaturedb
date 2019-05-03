@@ -52,7 +52,7 @@
 
 	echo "<table border='1'><tr><th>Creature Name</th><th>Level</th><th>Mountable</th></tr>";
 	for ($x = 0; $x < $answersize; $x++) {	
-		echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td><td>". $answer[$x]["Level"]. "</td><td>". $answer[$x]["Mount"]. "</td></tr>";
+		echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td><td>". number_format($answer[$x]["Level"]). "</td><td>". $answer[$x]["Mount"]. "</td></tr>";
 	}
 	echo "</table><br />";
 	

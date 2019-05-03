@@ -59,7 +59,7 @@
 				$aggressive = "Yes";
 			}
 			
-			echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td><td>". $answer[$x]["Planet"]. "</td><td>". $answer[$x]["Level"]. "</td><td>". $aggressive. "</td><td>". $answer[$x]["Mount"]. "</td><td>". $answer[$x]["Missions_Available"]. "</td></tr>";
+			echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td><td>". $answer[$x]["Planet"]. "</td><td>". number_format($answer[$x]["Level"]). "</td><td>". $aggressive. "</td><td>". $answer[$x]["Mount"]. "</td><td>". $answer[$x]["Missions_Available"]. "</td></tr>";
 		}
 		echo "</table><br />";
 	} else{

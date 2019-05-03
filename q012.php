@@ -14,7 +14,7 @@
 		<option value="Yavin">Yavin</option>
 	</select>
 	when using 
-	<select name="planet">
+	<select name="damage">
 		<option value="Kinetic">Kinetic</option>
 		<option value="Energy">Energy</option>
 		<option value="Blast">Blast</option>
