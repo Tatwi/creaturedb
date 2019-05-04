@@ -39,7 +39,7 @@
 		return $armorrating;
 	}
 	
-	echo "<h2>What animal missions give the most XP on ". $_POST["planet"]. " when using ". $_POST["damage"]. " damage?</h2>";
+	echo "<h2>What animal missions give the most XP on ". $_POST["planet"]. " when using ". $_POST["damage"]. " damage with Armor Piercing ". armorRatingIs($_POST["ap"]). "?</h2>";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -49,7 +49,7 @@
 		die("Connection failed: " . $conn->connect_error);
 	}
 	// Example: SELECT Planet, Creature_Name, Level, Armor, Base_XP FROM Tarkin_Creatures WHERE Missions_Available LIKE 'Yes' AND Planet LIKE 'Corellia' AND Kinetic < 20 ORDER BY Planet, length(Base_XP) DESC, Base_XP DESC;
-	$sql = "SELECT Planet, Creature_Name, Level, Armor, Base_XP, ". $_POST["damage"]. " FROM Tarkin_Creatures WHERE Missions_Available LIKE 'Yes' AND Planet LIKE '". $_POST["planet"]. "' AND ". $_POST["damage"]. " <= 10 ORDER BY Planet, length(Base_XP) DESC, Base_XP DESC";
+	$sql = "SELECT Planet, Creature_Name, Level, Armor, Base_XP, ". $_POST["damage"]. " FROM Tarkin_Creatures WHERE Missions_Available LIKE 'Yes' AND Planet LIKE '". $_POST["planet"]. "' AND ". $_POST["damage"]. " <= 20 ". " AND Armor <= ". $_POST["ap"]. " ORDER BY Planet, length(Base_XP) DESC, Base_XP DESC";
 	$result = $conn->query($sql);
 	$answer = array();
 	$answercntr = 0;

@@ -25,5 +25,12 @@
 		<option value="Stun">Stun</option>
 		<option value="Lightsaber">Lightsaber</option>
 	</select> 
-	damage? <input type="submit" value ="Ask">
+	damage with Armor Piercing 
+	 <select name="ap">
+		<option value="0">None</option>
+		<option value="1">Light</option>
+		<option value="2">Medium</option>
+		<option value="3">Heavy</option>
+	</select>
+	 ? <input type="submit" value ="Ask">
 </div>

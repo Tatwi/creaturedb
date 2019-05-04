@@ -39,7 +39,7 @@
 		return $armorrating;
 	}
 	
-	echo "<h2>What's the easiest way to collect ". makePretty($_POST["resource"]). " using ". $_POST["damage"]. " damage?</h2>";
+	echo "<h2>What's the easiest way to collect ". makePretty($_POST["resource"]). " using ". $_POST["damage"]. " damage with Armor Piercing ". armorRatingIs($_POST["ap"]). "?</h2>";
 	
 	$restype = "";
 	$qnty = "";
@@ -64,7 +64,7 @@
 	}
 	
 	//Example: SELECT Creature_Name, Planet, Hide_Amount, Missions_Available, Armor, Base_HAM, Kinetic FROM Tarkin_Creatures WHERE Hide_Type='hide_leathery' AND Kinetic < 20 AND PVP_Bitmask NOT LIKE '%AGGRESSIVE%' AND Creature_Bitmask NOT LIKE '%KILLER%' AND Creature_BitMask NOT LIKE '%PACK%';
-	$sql = "SELECT Creature_Name, Planet, ". $qnty. ", Missions_Available, Armor, Base_HAM, ". $_POST["damage"]. " FROM Tarkin_Creatures WHERE ". $restype. "='". $_POST["resource"]. "' AND ". $_POST["damage"]. " < 20 AND PVP_Bitmask NOT LIKE '%AGGRESSIVE%' AND Creature_Bitmask NOT LIKE '%KILLER%' AND Creature_BitMask NOT LIKE '%PACK%'";
+	$sql = "SELECT Creature_Name, Planet, ". $qnty. ", Missions_Available, Armor, Base_HAM, ". $_POST["damage"]. " FROM Tarkin_Creatures WHERE ". $restype. "='". $_POST["resource"]. "' AND ". $_POST["damage"]. " <= 20 AND PVP_Bitmask NOT LIKE '%AGGRESSIVE%' AND Creature_Bitmask NOT LIKE '%KILLER%' AND Creature_BitMask NOT LIKE '%PACK%' AND Armor <= ". $_POST["ap"];
 	$result = $conn->query($sql);
 	$answer = array();
 	$answercntr = 0;
