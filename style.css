@@ -3,7 +3,7 @@ html {
 	width:  100%;
 	height: 100%;
 	margin: 0px;
-	background: #1A181F url(img/bg.jpg) no-repeat scroll top left;
+
 }
 
 body{
@@ -11,6 +11,10 @@ body{
 	width:  100%;
 	height: 100%;
 	margin: 0;
+	background-image:    url(img/bg.jpg);
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
 }
 
 a{
@@ -42,10 +46,10 @@ th, td {
 }
 
 .maincontainer{
-	width: 1028px;
-	position: relative;
-	left : 20%;
-	margin-left: -206px;
+	position: absolute;
+	width: 1350px;
+	left : 100px;
+	min-height: 640px;
 }
 
 .title{
@@ -67,8 +71,14 @@ th, td {
 	font-size: 42px;
 }
 
+.title a {
+	color: #FFFFFF;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 .contentbox{
-	width: 100%;
+	width: 1024px;
 	min-height: 600px;
 	margin-bottom: 10px;
 	position: relative;
@@ -144,9 +154,9 @@ th, td {
 .sidebar{
 	height: 600px;
 	width: 300px;
-	position: relative;
+	position: absolute;
 	vertical-align: top;
-	left: 310px;
+	left: 1044px;
 	text-align: left;
 	color: #FFFFFF;
 	border-style: ridge;
@@ -174,24 +184,21 @@ th, td {
 	margin: 0px 4px 8px 4px;
 	padding: 2px 4px 4px 4px;
 	text-align: left;
-	line-height: 24px;
+	line-height: 1.5;
 }
 
 .footer{
-	width: 1028px;
-	position: relative;
-	left : 50%;
-	margin-left: -514px;
+	width: 1350px;
+	position: realative;
 	margin-top: 100px;
 	text-align: center;
 	color: #C3CFD3;
 	font-size: 10px;
-	float: bottom;
 }
 
 .portrait{
 	margin: 8px;
-	float: left;
+	position: absolute;
 	border-style: ridge;
 	border-width: 2px 2px 3px 2px;
 	border-color: #6A7376;
@@ -200,37 +207,46 @@ th, td {
 .hambar{
 	height: 64px;
 	width: 352px;
+	top: 448px;
 	margin: 4px 0px 4px 8px;
 	padding: 4px 0px 0px 8px;
 	text-align: left;
 	background-image: url(img/hambar.png);
 	background-repeat: no-repeat;
 	background-position: center;
-	float: left;
+	position: absolute;
 }
 
 .hambar span{
 	left: 40px;
 	top: 38px;
 	position: relative;
-	line-height: 24px;
+	line-height: 1.5;
 }
 
 .crgeninfo{
-	line-height: 24px;
+	top: 82px;
+	left: 380px;
+	line-height: 1.5;
+	position: absolute;
+}
+
+.crgeninfo h2 {
+	margin: 0px;
 }
 
 .crcombat{
 	height: 340px;
 	width: 310px;
 	left: 380px;
+	top: 234px;
 	margin: 8px 0px 0px 0px;
 	padding: 4px;
 	position: absolute;
 	border-style: ridge;
 	border-width: 0.5px 0.5px 1px 0.5px;
 	border-color: #6A7376;
-	line-height: 24px;
+	line-height: 1.5;
 }
 
 .crcombattitle{
@@ -250,7 +266,7 @@ th, td {
 .crbio{
 	height: 436px;
 	width: 290px;
-	left: 720px;
+	left: 716px;
 	top: 138px;
 	margin: 8px 0px 0px 0px;
 	padding: 4px;
@@ -258,7 +274,7 @@ th, td {
 	border-style: ridge;
 	border-width: 0.5px 0.5px 1px 0.5px;
 	border-color: #6A7376;
-	line-height: 24px;
+	line-height: 1.5;
 }
 
 .crbiotitle{

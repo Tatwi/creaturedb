@@ -9,7 +9,7 @@
 <div class="maincontainer">
 	<div class="title">
 		 <img src="img/title.png" alt="Tarkin's Revenge" style="width:454px;height:174px;left:10px;position:relative;float:left;"> 
-		<strong>Creature Database</strong>
+		<strong><a href="index.php">Creature Database</a></strong>
 		<br />
 	</div>
 

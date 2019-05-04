@@ -76,8 +76,7 @@
 		}
 
 		// Format the creature name
-		$namearr = str_replace("_", " ", $argument1);
-		echo "<h2>". makePretty($argument1) . "</h2>"; 
+		$namearr = str_replace("_", " ", $argument1); 
 
 		$servername = "localhost";
 		$username = "rob";
@@ -106,6 +105,7 @@
 			echo "<br /><span><b>Chance to Hit:</b> ". number_format($row["Chance_to_Hit"]). " </span></div>";
 			
 			echo "<div class='crgeninfo'>";
+			echo "<h2>". makePretty($argument1) . "</h2>";
 			echo "<b>Planet:</b> ". $row["Planet"]. "<br />";
 			echo "<b>Level:</b> ". number_format($row["Level"]). "<br />";
 			
@@ -235,14 +235,14 @@
 			echo "<b>Ferocity:</b> ". number_format($row["Ferocity"]). "<br />";
 			echo "<b>Mountable:</b> ". $row["Mount"]. "<br />";
 			echo "<b>Can Sample DNA:</b> ". $row["BE_Can_Sample"]. "<br />";
-			echo "<b>Bio-Engineer Craftable:</b> ". $row["BE_Craftable"]. "<br />";
+			echo "<b>Bio-Engineer Craftable:</b> ". $row["BE_Craftable"]. "</div>";
 		} else {
 			echo "Unable to load creature data at this time.";
 		}
 		
 		$conn->close();
 		?>
-		<br />
+		
 	</div>
 
 <?php include("design-bottom.php"); ?>
