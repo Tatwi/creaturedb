@@ -1,4 +1,5 @@
 <?php include("design-top.php"); ?>
+<?php include("dbinfo.php"); ?>
 
 <div class="contentbox">
 	<div class="contentboxtitle"><span>Quick Answers</span></div>
@@ -64,11 +65,6 @@
 		}
 	
 	echo "<h2>What aggressive creatures can I sample DNA from?</h2>";
-	
-	$servername = "localhost";
-	$username = "rob";
-	$password = "123456";
-	$dbname = "creatures";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);

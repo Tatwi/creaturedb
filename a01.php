@@ -1,4 +1,5 @@
 <?php include("design-top.php"); ?>
+<?php include("dbinfo.php"); ?>
 
 <div class="contentbox">
 	<div class="contentboxtitle"><span>Quick Answers</span></div>
@@ -19,10 +20,6 @@
 	on the planet <?php echo $_POST["planet"]; ?>?</h2> 
 
 	<?php
-	$servername = "localhost";
-	$username = "rob";
-	$password = "123456";
-	$dbname = "creatures";
 	$restype = "";
 	$resamount = "";
 

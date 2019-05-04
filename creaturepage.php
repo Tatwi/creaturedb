@@ -1,4 +1,5 @@
 <?php include("design-top.php"); ?>
+<?php include("dbinfo.php"); ?>
 	
 	<div class="contentbox">
 		<div class="contentboxtitle"><span>Creature Information</span></div>
@@ -76,12 +77,7 @@
 		}
 
 		// Format the creature name
-		$namearr = str_replace("_", " ", $argument1); 
-
-		$servername = "localhost";
-		$username = "rob";
-		$password = "123456";
-		$dbname = "creatures";
+		$namearr = str_replace("_", " ", $argument1);
 
 		// Create connection
 		$conn = new mysqli($servername, $username, $password, $dbname);
