@@ -6,12 +6,13 @@
 		
 		<?php
 		// Helper functions
-		function checkVulnerable($value){
-			if ($value < 0) {
-				return "Vulnerable";
+		function resistPretty($value){
+			$resistvalue = number_format($value);
+			if ($resistvalue == -1){
+				$resistvalue = "Vulnerable";
 			}
 			
-			return number_format($value);
+			return $resistvalue;
 		}
 		
 		function makePretty($value){
@@ -125,18 +126,27 @@
 			} else {
 				$attackranged = "Yes";
 			}
-			echo "<b>Has Ranged Attack:</b> ". $attackranged. "<br /><br />";
+			echo "<b>Has Ranged Attack:</b> ". $attackranged. "<br />";
 			
-			echo "<b>Kinetic Resistance:</b> ". checkVulnerable($row["Kinetic"]). "<br />";
-			echo "<b>Energy Resistance:</b> ". checkVulnerable($row["Energy"]). "<br />";
-			echo "<b>Blast Resistance:</b> ". checkVulnerable($row["Blast"]). "<br />";
-			echo "<b>Heat Resistance:</b> ". checkVulnerable($row["Heat"]). "<br />";
-			echo "<b>Cold Resistance:</b> ". checkVulnerable($row["Cold"]). "<br />";
-			echo "<b>Electric Resistance:</b> ". checkVulnerable($row["Electric"]). "<br />";
-			echo "<b>Acid Resistance:</b> ". checkVulnerable($row["Acid"]). "<br />";
-			echo "<b>Stun Resistance:</b> ". checkVulnerable($row["Stun"]). "<br />";
+			$armorrating = "None";
+			if ($row["Armor"] == 1){
+				$armorrating = "Light";
+			} else if ($row["Armor"] == 2){
+				$armorrating = "Medium";
+			} else if ($row["Armor"] == 3){
+				$armorrating = "Heavy";
+			} 
+			echo "<b>Armor Rating:</b> ". $armorrating. "<br />";
 			
-			echo "<b>Lightsaber Resistance:</b> " . checkVulnerable($row["Lightsaber"]) . "</div>";
+			echo "<b>Kinetic Resistance:</b> ". resistPretty($row["Kinetic"]). "<br />";
+			echo "<b>Energy Resistance:</b> ". resistPretty($row["Energy"]). "<br />";
+			echo "<b>Blast Resistance:</b> ". resistPretty($row["Blast"]). "<br />";
+			echo "<b>Heat Resistance:</b> ". resistPretty($row["Heat"]). "<br />";
+			echo "<b>Cold Resistance:</b> ". resistPretty($row["Cold"]). "<br />";
+			echo "<b>Electric Resistance:</b> ". resistPretty($row["Electric"]). "<br />";
+			echo "<b>Acid Resistance:</b> ". resistPretty($row["Acid"]). "<br />";
+			echo "<b>Stun Resistance:</b> ". resistPretty($row["Stun"]). "<br />";
+			echo "<b>Lightsaber Resistance:</b> " . resistPretty($row["Lightsaber"]) . "</div>";
 			
 			// Biographical Data
 			echo "<div class='crbio'><div class='crbiotitle'>Biographical Data</div>";
