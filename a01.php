@@ -48,15 +48,20 @@
 	//echo $conn->host_info . "<br>";
 
 	// Example: SELECT Creature_Name, Bone_Amount FROM Tarkin_Creatures WHERE Bone_Type = 'bone_avian' AND Planet='Corellia' ORDER BY length(Bone_Amount) DESC, Bone_Amount DESC;
-	$sql = "SELECT Creature_Name, ". $resamount. " FROM Tarkin_Creatures WHERE ". $restype. "='" . $_POST["resource"] . "' AND Planet='" . $_POST["planet"] . "' ORDER BY length(". $resamount. ") DESC, ". $resamount. " DESC";
+	$sql = "SELECT Creature_Name, Level, Missions_Available, ". $resamount. " FROM Tarkin_Creatures WHERE ". $restype. "='" . $_POST["resource"] . "' AND Planet='" . $_POST["planet"] . "' ORDER BY length(". $resamount. ") DESC, ". $resamount. " DESC";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
-		echo "<table border='1'><tr><th>Creature Name</th><th>Quantity</th></tr>";
+		echo "<table border='1'><tr><th>Creature Name</th><th>Level</th><th>Quantity</th><th>Missions</th></tr>";
 		
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
-			echo "</tr><td><a href='#' onclick='loadCreaturePage(\"". $row["Creature_Name"] . "\")'>". ucwords(str_replace("_", " ", $row["Creature_Name"])). "</a></td><td>" . number_format($row[$resamount]) . "</td></tr>";
+			echo "</tr>
+			<td><a href='#' onclick='loadCreaturePage(\"". $row["Creature_Name"] . "\")'>". ucwords(str_replace("_", " ", $row["Creature_Name"])). "</a></td>
+			<td>" . number_format($row["Level"]) . "</td>
+			<td>" . number_format($row[$resamount]) . "</td>
+			<td>" . $row["Missions_Available"] . "</td>
+			</tr>";
 		}
 		echo "</table>";
 	} else {
