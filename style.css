@@ -21,6 +21,10 @@ a{
 	color: #CBF2FF;
 }
 
+a:hover{
+	color: #02E10F;
+}
+
 p{
 	text-align: left;
 }
@@ -76,6 +80,11 @@ th, td {
 	text-decoration: none;
 	cursor: pointer;
 }
+
+.title a:hover{
+	color: #02E10F;
+}
+
 
 .contentbox{
 	width: 1024px;

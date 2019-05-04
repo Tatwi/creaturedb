@@ -1,16 +1,16 @@
 	<div class="sidebar">
 		<div class="sbtitle">Creatures by Planet</div>
 		<div class="sbcontentbox">
-			<a href="">Corellia</a>&nbsp;&nbsp;
-			<a href="">Dantooine</a>&nbsp;&nbsp;
-			<a href="">Dathomir</a>&nbsp;&nbsp;
-			<a href="">Endor</a>&nbsp;&nbsp;
-			<a href="">Lok</a>&nbsp;&nbsp;
-			<a href="">Naboo</a>&nbsp;&nbsp;
-			<a href="">Rori</a>&nbsp;&nbsp;
-			<a href="">Talus</a>&nbsp;&nbsp;
-			<a href="">Tatooine</a>&nbsp;&nbsp;
-			<a href="">Yavin</a>
+			<a href="sortbyplanet.php?arg1=Corellia">Corellia</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Dantooine">Dantooine</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Dathomir">Dathomir</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Endor">Endor</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Lok">Lok</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Naboo">Naboo</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Rori">Rori</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Talus">Talus</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Tatooine">Tatooine</a>&nbsp;&nbsp;
+			<a href="sortbyplanet.php?arg1=Yavin">Yavin</a>
 		</div>
 		
 		<div class="sbtitle">Creatures Alphabetically</div>
