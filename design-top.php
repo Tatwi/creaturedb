@@ -8,7 +8,7 @@
 <body>
 <div class="maincontainer">
 	<div class="title">
-		 <img src="img/title.png" alt="Tarkin's Revenge" style="width:454px;height:174px;left:10px;position:relative;float:left;"> 
+		 <a href="https://tarkinswg.com"><img src="img/title.png" alt="Tarkin's Revenge" style="margin-top:4px;width:454px;height:174px;left:10px;position:relative;float:left;"></a>
 		<strong><a href="index.php">Creature Database</a></strong>
 		<br />
 	</div>
