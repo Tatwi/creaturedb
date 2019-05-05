@@ -19,7 +19,7 @@
 
 <div class="contentbox">
 	<div class="contentboxtitle"><span>Advanced Search</span></div>
-	<pre>Working on it...</pre>
+	<?php include("advsearch-input.php"); ?>
 </div>
 
 <?php include("design-bottom.php"); ?>

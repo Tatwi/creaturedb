@@ -11,10 +11,11 @@ body{
 	width:  100%;
 	height: 100%;
 	margin: 0;
-	background-image:    url(img/bg.jpg);
-    background-size:     cover;                      /* <------ */
-    background-repeat:   no-repeat;
-    background-position: center center;
+	font-size: 16px;
+	background-image: url(img/bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 a{
@@ -54,6 +55,26 @@ th, td {
 	width: 1350px;
 	left : 100px;
 	min-height: 640px;
+}
+
+select{
+	font-size: 14px;
+	color: #FBB700;
+	background-color: #000000;
+}
+
+option{
+	color: #000000;
+	background-color: #FFFFFF;
+}
+
+:checked + label {
+   font-weight: bold;
+   color: #FBB700;
+}
+
+input[type=number]:focus {
+  background-color: FBB700;
 }
 
 .title{
@@ -107,7 +128,7 @@ th, td {
 
 .contentboxtitle{
 	height: 66px;
-	width: 1020px;
+	width: 1016px;
 	left: 3px;
 	top: 2px;
 	margin-bottom: 4px;
@@ -145,13 +166,12 @@ th, td {
 	background-position: center;
 }
 
-.question input{
+input[type=submit]{
 	height: 32px;
 	width: 83px;
 	position: absolute;
 	vertical-align: top;
 	top: 12px;
-	left: 920px;
 	color: #FBB700;
 	border: none;
 	background-color: rgba(43, 56, 104, 0.1);
@@ -159,6 +179,10 @@ th, td {
 	background-repeat: no-repeat;
 	background-position: center;
 	cursor: pointer;
+}
+
+.question input{
+	left: 918px;
 }
 
 .sidebar{
@@ -299,4 +323,119 @@ th, td {
 	background-color: #008000;
 	background-image: url(img/texture.png);
 	background-position: center;
+}
+
+.advsearchtbl{
+	margin: 8px 0px 4px 0px;
+	width: 1008px;
+	line-height: 2;
+}
+
+.advsearchmaincontainer{
+	position: absolute;
+	left : 0px;
+	min-height: 640px;
+}
+
+.advsearchmaincontainer table, h1, h2, p, pre{
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.advsearchmaincontainer th, td {
+  padding: 10px;
+  vertical-align: top;
+  text-align: left;
+}
+
+.advsearchmaincontainer select, input{
+	margin-left: 4px;
+}
+
+.advsearchresult{
+	min-height: 600px;
+	left: 4px;
+	margin-bottom: 10px;
+	position: relative;
+	vertical-align: text-top;
+	vertical-align: top;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #FFFFFF;
+	border-style: ridge;
+	border-width: 1px 1px 2px 1px;
+	border-color: #6A7376;
+}
+
+.advsearchtitle{
+	height: 66px;
+	left: 3px;
+	top: 2px;
+	margin: 0px 6px 4px 0px;
+	position: relative;
+	vertical-align: top;
+	text-align: left;
+	padding: 0px;
+	color: #FFFFFF;
+	font-size: 24px;
+	text-shadow: #000000 0.1em 0.1em 0.1em;
+	border-style: ridge;
+	border-width: 0.5px 0.5px 1px 0.5px;
+	border-color: #6A7376;
+	background-color: #374778;
+	background-image: url(img/texture.png);
+	background-position: center;
+}
+
+.advsearchtitle span{
+	position: relative;
+	top: 18px;
+	left: 20px;
+}
+
+.advsrcgenlabels{
+	position: absolute;
+	margin-left: 8px;
+	left : 0px;
+	top: 72px;
+	line-height: 2;
+}
+
+.advsrcgen{
+	position: absolute;
+	margin-left: 0px;
+	left : 100px;
+	top: 72px;
+	line-height: 2;
+}
+
+.advsrcbtnsleft{
+	position: absolute;
+	margin-left: 8px;
+	left : 30px;
+	top: 400px;
+	line-height: 2;
+}
+
+.advsrcbtnsright{
+	position: absolute;
+	margin-left: 0px;
+	left : 260px;
+	top: 400px;
+	line-height: 2;
+}
+
+.advsrccombatlabels{
+	position: absolute;
+	margin-left: 0px;
+	left : 550px;
+	top: 72px;
+	line-height: 2;
+}
+
+.advsrccombat{
+	position: absolute;
+	margin-left: 0px;
+	left : 710px;
+	top: 72px;
+	line-height: 2;
 }
