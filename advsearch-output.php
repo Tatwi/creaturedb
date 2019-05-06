@@ -129,6 +129,8 @@
 	$pPlanet = $pLevel = $pXp = $pBone = $pHide = $pMeat = $pMilk = $pSocialGroup = $pDiet = false;
 	$pMissions = $pTamable = $pMountable = $pDna = $pBe = $pAggressive = $pPassive = false;
 	$pDeathblows = $noDb = $pAssists = $noAs = $pStalks = $noSt = $pRanged = false;
+	$pHam = $pDamage = $pToHit = $pFerocity = $pAttack1 = $pAttack2 = $pArmor = $pKinetic = false;
+	$pEnergy = $pBlast = $pHeat = $pCold = $pElectric = $pAcid = $pStun = $pLightsaber = false;
 	
 	if ($_POST["lPlanet"] == "any"){
 		$selections = " Planet, ";
@@ -366,6 +368,86 @@
 		$headings = $headings. "<th>Ranged Attack</th>";
 		$pRanged = true;
 	}
+	
+	if ($_POST["oHam"] != "" && $_POST["nHam"] > 0){
+		$selections = $selections. " Base_HAM, ";
+		$conditions = getConditions($conditions, $_POST["oHam"], $_POST["nHam"], " Base_HAM ");
+		$headings = $headings. "<th>HAM</th>";
+		$pHam = true;
+	}
+	
+	if ($_POST["oDamage"] != "" && $_POST["nDamage"] > 0 && !isset($_POST["bDamage"])){
+		$selections = $selections. " Min_Damage, Max_Damage, ";
+		$conditions = getConditions($conditions, $_POST["oDamage"], $_POST["nDamage"], " Max_Damage ");
+		$headings = $headings. "<th>Damage</th>";
+		$pDamage = true;
+	} else if ($_POST["oDamage"] != "" && $_POST["nDamage"] > 0 && isset($_POST["bDamage"])){
+		$selections = $selections. " Min_Damage, Max_Damage, ";
+		$conditions = getConditions($conditions, $_POST["oDamage"], $_POST["nDamage"], " Min_Damage ");
+		$headings = $headings. "<th>Damage</th>";
+		$pDamage = true;
+	}
+	
+	if ($_POST["oToHit"] != "" && $_POST["nToHit"] > 0){
+		$selections = $selections. " Chance_to_Hit, ";
+		$conditions = getConditions($conditions, $_POST["oToHit"], $_POST["nToHit"], " Chance_to_Hit ");
+		$headings = $headings. "<th>Hit Chance</th>";
+		$pToHit = true;
+	}
+	
+	if ($_POST["oFerocity"] != "" && $_POST["nFerocity"] > 0){
+		$selections = $selections. " Ferocity, ";
+		$conditions = getConditions($conditions, $_POST["oFerocity"], $_POST["nFerocity"], " Ferocity ");
+		$headings = $headings. "<th>Ferocity</th>";
+		$pFerocity = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if ($_POST["lAttack1"] == "any"){
+		$selections = $selections. " Attack_1, ";
+		$conditions = $conditions. $and. " Attack_1 IS NOT NULL ";
+		$headings = $headings. "<th>Attack 1</th>";
+		$pAttack1 = true;
+	} else if ($_POST["lAttack1"] != ""){
+		$selections = $selections. " Attack_1, ";
+		$conditions = $conditions. $and. " Attack_1 LIKE '". $_POST["lAttack1"]. "' ";
+		$headings = $headings. "<th>Attack 1</th>";
+		$pAttack1 = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if ($_POST["lAttack2"] == "any"){
+		$selections = $selections. " Attack_2, ";
+		$conditions = $conditions. $and. " Attack_2 IS NOT NULL ";
+		$headings = $headings. "<th>Attack 2</th>";
+		$pAttack2 = true;
+	} else if ($_POST["lAttack2"] != ""){
+		$selections = $selections. " Attack_2, ";
+		$conditions = $conditions. $and. " Attack_2 LIKE '". $_POST["lAttack2"]. "' ";
+		$headings = $headings. "<th>Attack 2</th>";
+		$pAttack2 = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if ($_POST["lArmor"] == "any"){
+		$selections = $selections. " Armor, ";
+		$headings = $headings. "<th>Armor Rating</th>";
+		$pArmor = true;
+	} else if ($_POST["lArmor"] != ""){
+		$selections = $selections. " Armor, ";
+		$conditions = $conditions. $and. " Armor = ". $_POST["lArmor"]. " ";
+		$headings = $headings. "<th>Armor Rating</th>";
+		$pArmor = true;
+	}
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -502,6 +584,34 @@
 			
 			if ($pRanged){
 				echo "<td>". makePretty(str_replace("creature_spit_small_", "", $answer[$x]["Ranged_Attack"])). "</td>";
+			}
+			
+			if ($pHam){
+				echo "<td>". number_format($answer[$x]["Base_HAM"]). "</td>";
+			}
+			
+			if ($pDamage){
+				echo "<td>". number_format($answer[$x]["Min_Damage"]). " - ".  number_format($answer[$x]["Max_Damage"]). "</td>";
+			}
+			
+			if ($pToHit){
+				echo "<td>". $answer[$x]["Chance_to_Hit"]. "</td>";
+			}
+			
+			if ($pFerocity){
+				echo "<td>". number_format($answer[$x]["Ferocity"]). "</td>";
+			}
+			
+			if ($pAttack1){
+				echo "<td>". specialAttackIs($answer[$x]["Attack_1"]). "</td>";
+			}
+			
+			if ($pAttack2){
+				echo "<td>". specialAttackIs($answer[$x]["Attack_2"]). "</td>";
+			}
+			
+			if ($pArmor){
+				echo "<td>". armorRatingIs($answer[$x]["Armor"]). "</td>";
 			}
 			
 			echo"</tr>";

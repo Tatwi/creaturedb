@@ -341,7 +341,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nDamage" min="1" max="5000"><br />
+		<input type="number" name="nDamage" min="1" max="5000"><input type="checkbox" name="bDamage"><label>By Min Value</label><br />
 		
 		&nbsp;
 		<select name="oToHit">
@@ -350,7 +350,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nToHit" min="0" max="200"><br />
+		<input type="number" name="nToHit" min="0.01" max="100" step="0.01"><br />
 		
 		&nbsp;
 		<select name="oFerocity">
@@ -359,11 +359,12 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nFerocity" min="1" max="200"><br />
+		<input type="number" name="nFerocity" min="0" max="50"><br />
 
 		&nbsp;
 		<select name="lAttack1">
 			<option value=""></option>
+			<option value="any">Any</option>
 			<option value="blindattack">Blinding Strike</option>
 			<option value="creatureareaattack">Creature Area Attack</option>
 			<option value="posturedownattack">Crippling Strike</option>
@@ -387,6 +388,7 @@
 		&nbsp;
 		<select name="lAttack2">
 			<option value=""></option>
+			<option value="any">Any</option>
 			<option value="blindattack">Blinding Strike</option>
 			<option value="creatureareaattack">Creature Area Attack</option>
 			<option value="posturedownattack">Crippling Strike</option>
@@ -410,6 +412,7 @@
 		&nbsp;
 		<select name="lArmor">
 			<option value=""></option>
+			<option value="any">Any</option>
 			<option value="0">None</option>
 			<option value="1">Light</option>
 			<option value="2">Medium</option>
@@ -423,7 +426,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nKinetic" min="1" max="500"><br />
+		<input type="number" name="nKinetic" min="-1" max="500"><br />
 		
 		&nbsp;
 		<select name="oEnergy">
@@ -432,7 +435,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nEnergy" min="1" max="500"><br />
+		<input type="number" name="nEnergy" min="-1" max="500"><br />
 		
 		&nbsp;
 		<select name="oBlast">
@@ -441,7 +444,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nBlast" min="1" max="500"><br />
+		<input type="number" name="nBlast" min="-1" max="500"><br />
 		
 		&nbsp;
 		<select name="oHeat">
@@ -450,7 +453,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nHeat" min="1" max="500"><br />
+		<input type="number" name="nHeat" min="-1" max="500"><br />
 		
 		&nbsp;
 		<select name="oCold">
@@ -459,7 +462,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nCold" min="1" max="500"><br />
+		<input type="number" name="nCold" min="-1" max="500"><br />
 		
 		&nbsp;
 		<select name="oElectric">
@@ -468,7 +471,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nElectric" min="1" max="500"><br />
+		<input type="number" name="nElectric" min="-1" max="500"><br />
 		
 		&nbsp;
 		<select name="oAcid">
@@ -477,7 +480,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nAcid" min="1" max="500"><br />
+		<input type="number" name="nAcid" min="-1" max="500"><br />
 		
 		&nbsp;
 		<select name="oStun">
@@ -486,7 +489,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nStun" min="1" max="500"><br />
+		<input type="number" name="nStun" min="-1" max="500"><br />
 		
 		&nbsp;
 		<select name="oLightsaber">
@@ -495,11 +498,13 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nLightsaber" min="1" max="500"><br />
+		<input type="number" name="nLightsaber" min="-1" max="500"><br />
 	</div>
 	
 	<div class="spacer" style="height:530px;">&nbsp;</div>
-	<p>To include an item on the results page use the Any drop down option or use &rsaquo;= [valid number] for number fields.</p>
+	<pre>
+		To include an item on the results page use the Any drop down option or use &rsaquo;= [valid number] for number fields. 
+		For resistance vulnerabilities use a value of -1.</pre>
 	<div class="question">
 		<a href="" onclick="clearField(this.form)">Reset Form</a> <input type="submit" value ="Submit">
 	</div>
