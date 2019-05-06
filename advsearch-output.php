@@ -96,13 +96,125 @@
 		// There are a few cases the value will be NA
 		return $value;
 	}
+	
+	// Input: $conditions, $_POST["oLevel"], $_POST["nLevel"], " Level, "
+	function getConditions($con, $op, $num, $str){
+		$retvalue = $con;
+		$and = "";
+		
+		if ($con != ""){
+			$and = " AND ";
+		}
+		
+		if (empty($op) || empty($num)){
+			// Any/Failsafe
+			$retvalue = $retvalue. $and. $str. " >= 1";
+		} else if ($op == "gr"){
+			$retvalue = $retvalue. $and. $str. " >= ". $num;
+		} else if ($op == "ls"){
+			$retvalue = $retvalue. $and. $str. " <= ". $num;
+		} else if ($op == "eq"){
+			$retvalue = $retvalue. $and. $str. " = ". $num;
+		}
+		
+		return $retvalue;
+	}
 
 	// Build-A-Query
 	$selections = "";
 	$conditions = "";
-	$orderby = "";
 	$headings = "";
-	$fields = "";
+	$and  = "";
+	$tmp = "";
+	$pPlanet = $pLevel = $pXp = $pBone = $pHide = $pMeat = $pMilk = $pSocialGroup = false;
+	
+	if ($_POST["lPlanet"] == "any"){
+		$selections = " Planet, ";
+		$headings = "<th>Planet</th>";
+		$pPlanet = true;
+	} else if ($_POST["lPlanet"] != ""){
+		$selections = " Planet, ";
+		$conditions = " Planet LIKE '". $_POST["lPlanet"]. "'";
+		$headings = "<th>Planet</th>";
+		$pPlanet = true;
+	}
+	
+	if ($_POST["oLevel"] != "" && $_POST["nLevel"] > 0){
+		$selections = $selections. " Level, ";
+		$conditions = getConditions($conditions, $_POST["oLevel"], $_POST["nLevel"], " Level ");
+		$headings = $headings. "<th>Level</th>";
+		$pLevel = true;
+	}
+	
+	if ($_POST["oXp"] != "" && $_POST["nXp"] > 0){
+		$selections = $selections. " Base_XP, ";
+		$conditions = getConditions($conditions, $_POST["oXp"], $_POST["nXp"], " Base_XP ");
+		$headings = $headings. "<th>XP</th>";
+		$pXp = true;
+	}
+	
+	if ($_POST["lBone"] == "any"){
+		$selections = $selections. " Bone_Type, Bone_Amount, ";
+		$conditions = getConditions($conditions, $_POST["oBone"], $_POST["nBone"], " Bone_Amount ");
+		$headings = $headings. "<th>Bone Type</th><th>Bone Amount</th>";
+		$pBone = true;
+	} else if ($_POST["lBone"] != "" && $_POST["oBone"] != "" && $_POST["nBone"] > 0){
+		$selections = $selections. " Bone_Type, Bone_Amount, ";
+		$conditions = getConditions($conditions, $_POST["oBone"], $_POST["nBone"], " Bone_Amount "). " AND Bone_Type LIKE '". $_POST["lBone"]. "' ";
+		$headings = $headings. "<th>Bone Type</th><th>Bone Amount</th>";
+		$pBone = true;
+	}
+	
+	if ($_POST["lHide"] == "any"){
+		$selections = $selections. " Hide_Type, Hide_Amount, ";
+		$conditions = getConditions($conditions, $_POST["oHide"], $_POST["nHide"], " Hide_Amount ");
+		$headings = $headings. "<th>Hide Type</th><th>Hide Amount</th>";
+		$pHide = true;
+	} else if ($_POST["lHide"] != "" && $_POST["oHide"] != "" && $_POST["nHide"] > 0){
+		$selections = $selections. " Hide_Type, Hide_Amount, ";
+		$conditions = getConditions($conditions, $_POST["oHide"], $_POST["nHide"], " Hide_Amount "). " AND Hide_Type LIKE '". $_POST["lHide"]. "' ";
+		$headings = $headings. "<th>Hide Type</th><th>Hide Amount</th>";
+		$pHide = true;
+	}
+	
+	if ($_POST["lMeat"] == "any"){
+		$selections = $selections. " Meat_Type, Meat_Amount, ";
+		$conditions = getConditions($conditions, $_POST["oMeat"], $_POST["nMeat"], " Meat_Amount ");
+		$headings = $headings. "<th>Meat Type</th><th>Meat Amount</th>";
+		$pMeat = true;
+	} else if ($_POST["lMeat"] != "" && $_POST["oMeat"] != "" && $_POST["nMeat"] > 0){
+		$selections = $selections. " Meat_Type, Meat_Amount, ";
+		$conditions = getConditions($conditions, $_POST["oMeat"], $_POST["nMeat"], " Meat_Amount "). " AND Meat_Type LIKE '". $_POST["lMeat"]. "' ";
+		$headings = $headings. "<th>Meat Type</th><th>Meat Amount</th>";
+		$pMeat = true;
+	}
+	
+	if ($_POST["lMilk"] == "any"){
+		$selections = $selections. " Milk_Type, Milk_Amount, ";
+		$conditions = getConditions($conditions, $_POST["oMilk"], $_POST["nMilk"], " Milk_Amount ");
+		$headings = $headings. "<th>Milk Type</th><th>Milk Amount</th>";
+		$pMilk = true;
+	} else if ($_POST["lMilk"] != "" && $_POST["oMilk"] != "" && $_POST["nMilk"] > 0){
+		$selections = $selections. " Milk_Type, Milk_Amount, ";
+		$conditions = getConditions($conditions, $_POST["oMilk"], $_POST["nMilk"], " Milk_Amount "). " AND Milk_Type LIKE '". $_POST["lMilk"]. "' ";
+		$headings = $headings. "<th>Milk Type</th><th>Milk Amount</th>";
+		$pMilk = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if ($_POST["lSocialGroup"] == "any"){
+		$selections = $selections. " Social_Group, ";
+		$headings = $headings. "<th>Social Group</th>";
+		$pSocialGroup = true;
+	} else if ($_POST["lSocialGroup"] != ""){
+		$selections = $selections. " Social_Group, ";
+		$conditions = $conditions. $and. " Social_Group LIKE '". $_POST["lSocialGroup"]. "' ";
+		$headings = $headings. "<th>Social Group</th>";
+		$pSocialGroup = true;
+	}
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -111,10 +223,23 @@
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	}
+	
+	// Add WHERE for conditions
+	$where = "";
+	if ($conditions != ""){
+		$where = "WHERE ";
+	}
 
 	//echo $conn->host_info . "<br>";
 
-	$sql = "SELECT ". $selections. " NULL FROM Tarkin_Creatures WHERE ". $conditions. $orderby;
+	// NULL is there to eat the trailing comma left by $selections
+	$sql = "SELECT Creature_Name, ". $selections. " NULL FROM Tarkin_Creatures ". $where. $conditions. " ORDER BY Planet, length(Level), Level";
+	
+	// Debug
+	//echo "conditions: ". $conditions. "<br />";
+	//echo "lPlanet = ". $_POST["lPlanet"]. "<br />";
+	//echo "<br />Query: ". $sql. "<br /><br />";
+	
 	$result = $conn->query($sql);
 	$answer = array();
 	$answercntr = 0;
@@ -132,13 +257,51 @@
 	$answersize = count($answer);
 	
 	if ($results){
-		echo "<table><tr>". $headings. "</tr>";
+		echo "<br /><table><tr><th>Creature Name</th>". $headings. "</tr>";
 		for ($x = 0; $x < $answersize; $x++) {
-			echo "<tr>". $fields. "</tr>";
+			echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td>";
+			
+			if ($pPlanet){
+				echo "<td>". $answer[$x]["Planet"]. "</td>";
+			}
+			
+			if ($pLevel){
+				echo "<td>". number_format($answer[$x]["Level"]). "</td>";
+			}
+			
+			if ($pXp){
+				echo "<td>". number_format($answer[$x]["Base_XP"]). "</td>";
+			}
+			
+			if ($pBone){
+				echo "<td>". str_replace("Bone", "", makePretty($answer[$x]["Bone_Type"])). "</td><td>". number_format($answer[$x]["Bone_Amount"]). "</td>";
+			}
+			
+			if ($pHide){
+				echo "<td>". str_replace("Hide", "", makePretty($answer[$x]["Hide_Type"])). "</td><td>". number_format($answer[$x]["Hide_Amount"]). "</td>";
+			}
+			
+			if ($pMeat){
+				echo "<td>". str_replace("Meat", "", makePretty($answer[$x]["Meat_Type"])). "</td><td>". number_format($answer[$x]["Meat_Amount"]). "</td>";
+			}
+			
+			if ($pMilk){
+				echo "<td>". str_replace("Milk", "", makePretty($answer[$x]["Milk_Type"])). "</td><td>". number_format($answer[$x]["Milk_Amount"]). "</td>";
+			}
+			
+			if ($pSocialGroup){
+				echo "<td>". makePretty($answer[$x]["Social_Group"]). "</td>";
+			}
+			
+			echo"</tr>";
 		}
-		echo "</table><br />";
+		echo "</table><p>". $answersize. " Reults Found</p>";
 	} else{
-		echo "<p>Sorry, no results were found for the following query:<br /><br />". $sql. "<br /><br />Have a look over the conditions and values, make your changes, and try again.</p>";
+		echo "<p>Sorry, no results were found. Have a look over the conditions and values, make your changes, and try again.
+		</p>
+		<p>
+		Use the Back button in your browser rather than the <em>Back to main page ...</em> link below to avoid resetting the form.
+		</p>";
 	}
 
 	$conn->close();

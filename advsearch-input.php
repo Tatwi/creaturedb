@@ -32,6 +32,7 @@
 		&nbsp;
 		<select name="lPlanet">
 			<option value=""></option>
+			<option value="any">Any</option>
 			<option value="Corellia">Corellia</option>
 			<option value="Dantooine">Dantooine</option>
 			<option value="Dathomir">Dathomir</option>
@@ -348,7 +349,7 @@
 			<option value="gr">&rsaquo;=</option>
 			<option value="ls">&lsaquo;=</option>
 		</select>
-		<input type="number" name="nToHit" min="1" max="200"><br />
+		<input type="number" name="nToHit" min="0" max="200"><br />
 		
 		&nbsp;
 		<select name="oFerocity">
@@ -497,7 +498,7 @@
 	</div>
 	
 	<div class="spacer" style="height:530px;">&nbsp;</div>
-	
+	<p>To include an item on the results page use the Any drop down option or use &rsaquo;= [valid number] for number fields.</p>
 	<div class="question">
 		<a href="" onclick="clearField(this.form)">Reset Form</a> <input type="submit" value ="Submit">
 	</div>

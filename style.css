@@ -337,19 +337,15 @@ input[type=submit]{
 	min-height: 640px;
 }
 
-.advsearchmaincontainer table, h1, h2, p, pre{
+.advsearchresult table, h1, h2, p, pre{
 	margin-left: 8px;
 	margin-right: 8px;
 }
 
-.advsearchmaincontainer th, td {
+.advsearchresult th, td {
   padding: 10px;
   vertical-align: top;
-  text-align: left;
-}
-
-.advsearchmaincontainer select, input{
-	margin-left: 4px;
+  text-align: center;
 }
 
 .advsearchresult{
