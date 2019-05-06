@@ -126,7 +126,9 @@
 	$headings = "";
 	$and  = "";
 	$tmp = "";
-	$pPlanet = $pLevel = $pXp = $pBone = $pHide = $pMeat = $pMilk = $pSocialGroup = false;
+	$pPlanet = $pLevel = $pXp = $pBone = $pHide = $pMeat = $pMilk = $pSocialGroup = $pDiet = false;
+	$pMissions = $pTamable = $pMountable = $pDna = $pBe = $pAggressive = $pPassive = false;
+	$pDeathblows = $noDb = $pAssists = $noAs = $pStalks = $noSt = $pRanged = false;
 	
 	if ($_POST["lPlanet"] == "any"){
 		$selections = " Planet, ";
@@ -215,6 +217,155 @@
 		$headings = $headings. "<th>Social Group</th>";
 		$pSocialGroup = true;
 	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if ($_POST["lDiet"] == "any"){
+		$selections = $selections. " Diet, ";
+		$headings = $headings. "<th>Diet</th>";
+		$pDiet = true;
+	} else if ($_POST["lDiet"] != ""){
+		$selections = $selections. " Diet, ";
+		$conditions = $conditions. $and. " Diet LIKE '". $_POST["lDiet"]. "' ";
+		$headings = $headings. "<th>Diet</th>";
+		$pDiet = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bMissions"])){
+		$selections = $selections. " Missions_Available, ";
+		$conditions = $conditions. $and. " Missions_Available LIKE 'Yes' ";
+		$headings = $headings. "<th>Missions</th>";
+		$pMissions = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bTamable"])){
+		$selections = $selections. " Taming_Chance, ";
+		$conditions = $conditions. $and. " Taming_Chance > 0 ";
+		$headings = $headings. "<th>Tamable</th>";
+		$pTamable = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bMountable"])){
+		$selections = $selections. " Mount, ";
+		$conditions = $conditions. $and. " Mount LIKE 'Yes' ";
+		$headings = $headings. "<th>Mountable</th>";
+		$pMountable = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bDna"])){
+		$selections = $selections. " BE_Can_Sample, ";
+		$conditions = $conditions. $and. " BE_Can_Sample LIKE 'Yes' ";
+		$headings = $headings. "<th>DNA</th>";
+		$pDna = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bBe"])){
+		$selections = $selections. " BE_Craftable, ";
+		$conditions = $conditions. $and. " BE_Craftable LIKE 'Yes' ";
+		$headings = $headings. "<th>BE Craftable</th>";
+		$pBe = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bAggressiveYes"])){
+		$selections = $selections. " PVP_Bitmask, ";
+		$conditions = $conditions. $and. " PVP_Bitmask LIKE '%AGGRESSIVE%' ";
+		$headings = $headings. "<th>Aggressive</th>";
+		$pAggressive = true;
+	} else if (isset($_POST["bAggressiveNo"])){
+		$selections = $selections. " PVP_Bitmask, ";
+		$conditions = $conditions. $and. " PVP_Bitmask NOT LIKE '%AGGRESSIVE%' ";
+		$headings = $headings. "<th>Aggressive</th>";
+		$pAggressive = true;
+		$pPassive = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bDeathblowsYes"])){
+		$selections = $selections. " Creature_Bitmask, ";
+		$conditions = $conditions. $and. " Creature_Bitmask LIKE '%KILLER%' ";
+		$headings = $headings. "<th>Deathblows</th>";
+		$pDeathblows = true;
+	} else if (isset($_POST["bDeathblowsNo"])){
+		$selections = $selections. " PVP_Bitmask, ";
+		$conditions = $conditions. $and. " Creature_Bitmask NOT LIKE '%KILLER%' ";
+		$headings = $headings. "<th>Deathblows</th>";
+		$pDeathblows = true;
+		$noDb = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bAssistsYes"])){
+		$selections = $selections. " Creature_Bitmask, ";
+		$conditions = $conditions. $and. " Creature_Bitmask LIKE '%PACK%' ";
+		$headings = $headings. "<th>Assists</th>";
+		$pAssists = true;
+	} else if (isset($_POST["bAssistsNo"])){
+		$selections = $selections. " Creature_Bitmask, ";
+		$conditions = $conditions. $and. " Creature_Bitmask NOT LIKE '%PACK%' ";
+		$headings = $headings. "<th>Assists</th>";
+		$pAssists = true;
+		$noAs = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bStalksYes"])){
+		$selections = $selections. " Creature_Bitmask, ";
+		$conditions = $conditions. $and. " Creature_Bitmask LIKE '%STALKER%' ";
+		$headings = $headings. "<th>Stalker</th>";
+		$pStalks = true;
+	} else if (isset($_POST["bStalksNo"])){
+		$selections = $selections. " Creature_Bitmask, ";
+		$conditions = $conditions. $and. " Creature_Bitmask NOT LIKE '%STALKER%' ";
+		$headings = $headings. "<th>Stalker</th>";
+		$pStalks = true;
+		$noSt = true;
+	}
+	
+	if ($conditions != ""){
+		$and = " AND ";
+	}
+	
+	if (isset($_POST["bRanged"])){
+		$selections = $selections. " Ranged_Attack, ";
+		$conditions = $conditions. $and. " Ranged_Attack IS NOT NULL ";
+		$headings = $headings. "<th>Ranged Attack</th>";
+		$pRanged = true;
+	}
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -238,7 +389,7 @@
 	// Debug
 	//echo "conditions: ". $conditions. "<br />";
 	//echo "lPlanet = ". $_POST["lPlanet"]. "<br />";
-	//echo "<br />Query: ". $sql. "<br /><br />";
+	echo "<br />Query: ". $sql. "<br /><br />";
 	
 	$result = $conn->query($sql);
 	$answer = array();
@@ -291,6 +442,66 @@
 			
 			if ($pSocialGroup){
 				echo "<td>". makePretty($answer[$x]["Social_Group"]). "</td>";
+			}
+			
+			if ($pDiet){
+				echo "<td>". makePretty($answer[$x]["Diet"]). "</td>";
+			}
+			
+			if ($pMissions){
+				echo "<td>". $answer[$x]["Missions_Available"]. "</td>";
+			}
+			
+			if ($pTamable){
+				echo "<td>". number_format($answer[$x]["Taming_Chance"] * 100). "%</td>";
+			}
+			
+			if ($pMountable){
+				echo "<td>". $answer[$x]["Mount"]. "</td>";
+			}
+			
+			if ($pDna){
+				echo "<td>". $answer[$x]["BE_Can_Sample"]. "</td>";
+			}
+			
+			if ($pBe){
+				echo "<td>". $answer[$x]["BE_Craftable"]. "</td>";
+			}
+			
+			if ($pAggressive){
+				if ($pPassive){
+					echo "<td>No</td>";
+				} else {
+					echo "<td>Yes</td>";
+				}
+			}
+			
+			if ($pDeathblows){
+				if ($noDb){
+					echo "<td>No</td>";
+				} else {
+					echo "<td>Yes</td>";
+				}
+			}
+			
+			if ($pAssists){
+				if ($noAs){
+					echo "<td>No</td>";
+				} else {
+					echo "<td>Yes</td>";
+				}
+			}
+			
+			if ($pStalks){
+				if ($noSt){
+					echo "<td>No</td>";
+				} else {
+					echo "<td>Yes</td>";
+				}
+			}
+			
+			if ($pRanged){
+				echo "<td>". makePretty(str_replace("creature_spit_small_", "", $answer[$x]["Ranged_Attack"])). "</td>";
 			}
 			
 			echo"</tr>";

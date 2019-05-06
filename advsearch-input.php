@@ -280,8 +280,9 @@
 		</select><br />
 		
 		&nbsp;
-		<select name="oHam">
+		<select name="lDiet">
 			<option value=""></option>
+			<option value="any">Any</option>
 			<option value="CARNIVORE">Carnivore</option>
 			<option value="HERBIVORE">Herbavore</option>
 		</select><br />
@@ -296,10 +297,10 @@
 	</div>
 	
 	<div class="advsrcbtnsright">
-		<input type="checkbox" name="bAggressive"><label>Aggressive</label><br />
-		<input type="checkbox" name="bDeathblows"><label>Deathblows</label><br />
-		<input type="checkbox" name="bAssists"><label>Assists Allies</label><br />
-		<input type="checkbox" name="bStalks"><label>Stalks Prey</label><br />
+		Aggressive:&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bAggressiveYes"><label>Yes</label> <input type="checkbox" name="bAggressiveNo"><label>No</label><br />
+		Deathblows:&nbsp;&nbsp;<input type="checkbox" name="bDeathblowsYes"><label>Yes</label> <input type="checkbox" name="bDeathblowsNo"><label>No</label><br />
+		Assists Allies:&nbsp;<input type="checkbox" name="bAssistsYes"><label>Yes</label> <input type="checkbox" name="bAssistsNo"><label>No</label><br />
+		Stalks Prey:&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bStalksYes"><label>Yes</label> <input type="checkbox" name="bStalksNo"><label>No</label><br />
 		<input type="checkbox" name="bRanged"><label>Has Ranged Attack</label><br />
 	</div>
 
