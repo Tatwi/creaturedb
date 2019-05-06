@@ -504,7 +504,7 @@
 	<div class="spacer" style="height:530px;">&nbsp;</div>
 	<pre>
 		To include an item on the results page use the Any drop down option or use &rsaquo;= [valid number] for number fields. 
-		For resistance vulnerabilities use a value of -1.</pre>
+		For resistance vulnerabilities use a value of -1. Use a value of 0 for no resistance.</pre>
 	<div class="question">
 		<a href="" onclick="clearField(this.form)">Reset Form</a> <input type="submit" value ="Submit">
 	</div>

@@ -97,7 +97,7 @@
 		return $value;
 	}
 	
-	// Input: $conditions, $_POST["oLevel"], $_POST["nLevel"], " Level, "
+	// Input: $conditions, $_POST["oLevel"], $_POST["nLevel"], " Level "
 	function getConditions($con, $op, $num, $str){
 		$retvalue = $con;
 		$and = "";
@@ -106,7 +106,7 @@
 			$and = " AND ";
 		}
 		
-		if (empty($op) || empty($num)){
+		if (empty($op)){
 			// Any/Failsafe
 			$retvalue = $retvalue. $and. $str. " >= 1";
 		} else if ($op == "gr"){
@@ -129,8 +129,9 @@
 	$pPlanet = $pLevel = $pXp = $pBone = $pHide = $pMeat = $pMilk = $pSocialGroup = $pDiet = false;
 	$pMissions = $pTamable = $pMountable = $pDna = $pBe = $pAggressive = $pPassive = false;
 	$pDeathblows = $noDb = $pAssists = $noAs = $pStalks = $noSt = $pRanged = false;
-	$pHam = $pDamage = $pToHit = $pFerocity = $pAttack1 = $pAttack2 = $pArmor = $pKinetic = false;
-	$pEnergy = $pBlast = $pHeat = $pCold = $pElectric = $pAcid = $pStun = $pLightsaber = false;
+	$pHam = $pDamage = $pToHit = $pFerocity = $pAttack1 = $pAttack2 = $pArmor = false;
+	$resists = array("Kinetic", "Energy", "Blast", "Heat", "Cold", "Electric", "Acid", "Stun", "Lightsaber");
+	$pResists = array(false, false, false, false, false, false, false, false, false);
 	
 	if ($_POST["lPlanet"] == "any"){
 		$selections = " Planet, ";
@@ -448,6 +449,15 @@
 		$headings = $headings. "<th>Armor Rating</th>";
 		$pArmor = true;
 	}
+	
+	for ($x = 0; $x < 11; $x++){
+		if ($_POST["o". $resists[$x]] != "" && (int)$_POST["n". $resists[$x]] >= -1){
+			$selections = $selections. " $resists[$x], ";
+			$conditions = getConditions($conditions, $_POST["o". $resists[$x]], $_POST["n". $resists[$x]], " $resists[$x] ");
+			$headings = $headings. "<th>$resists[$x]</th>";
+			$pResists[$x] = true;
+		}
+	}
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -471,7 +481,7 @@
 	// Debug
 	//echo "conditions: ". $conditions. "<br />";
 	//echo "lPlanet = ". $_POST["lPlanet"]. "<br />";
-	echo "<br />Query: ". $sql. "<br /><br />";
+	//echo "<br />Query: ". $sql. "<br /><br />";
 	
 	$result = $conn->query($sql);
 	$answer = array();
@@ -612,6 +622,12 @@
 			
 			if ($pArmor){
 				echo "<td>". armorRatingIs($answer[$x]["Armor"]). "</td>";
+			}
+			
+			for ($y = 0; $y < 11; $y++){
+				if ($pResists[$y]){
+					echo "<td>". number_format($answer[$x][$resists[$y]]). "</td>";
+				}
 			}
 			
 			echo"</tr>";
