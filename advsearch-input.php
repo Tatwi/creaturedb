@@ -11,12 +11,27 @@
 	lPlanet: Selection list values
 	nName: For numerical values
 	sName: For string values
+	obName: Order results by checkboxes
 	
 	I did this because there are so many variables to track for this form. 
 -->
 
 <form id="advsrc" action="advsearch-output.php" method="post">
+	<div class="advsrcorderbyleft">
+		Sort By<br />
+		<input type="checkbox" name="obPlanet"><label> &rarr;</label><br />
+		<input type="checkbox" name="obLevel"><label> &rarr;</label><br />
+		<input type="checkbox" name="obXp"><label> &rarr;</label><br />
+		<input type="checkbox" name="obBone"><label> &rarr;</label><br />
+		<input type="checkbox" name="obHide"><label> &rarr;</label><br />
+		<input type="checkbox" name="obMeat"><label> &rarr;</label><br />
+		<input type="checkbox" name="obMilk"><label> &rarr;</label><br />
+		<input type="checkbox" name="obSocialGroup"><label> &rarr;</label><br />
+		<input type="checkbox" name="obDiet"><label> &rarr;</label><br />
+	</div>
+	
 	<div class="advsrcgenlabels">
+		<br />
 		<b>Planet:<br />
 		Level:<br />
 		XP:<br />
@@ -29,6 +44,7 @@
 	</div>
 	
 	<div class="advsrcgen">
+		<br />
 		&nbsp;
 		<select name="lPlanet">
 			<option value=""></option>
@@ -294,6 +310,9 @@
 		<input type="checkbox" name="bMountable"><label>Mountable</label><br />
 		<input type="checkbox" name="bDna"><label>Can Sample DNA</label><br />
 		<input type="checkbox" name="bBe"><label>Bio-Engineer Craftable</label><br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" name="obAsc"><label> Sort Ascending Instead</label>
 	</div>
 	
 	<div class="advsrcbtnsright">
@@ -304,7 +323,28 @@
 		<input type="checkbox" name="bRanged"><label>Has Ranged Attack</label><br />
 	</div>
 
+	<div class="advsrcorderbyright">
+		Sort By<br />
+		<input type="checkbox" name="obHam"><label> &rarr;</label><br />
+		<input type="checkbox" name="obDamage"><label> &rarr;</label><br />
+		<input type="checkbox" name="obToHit"><label> &rarr;</label><br />
+		<input type="checkbox" name="obFerocity"><label> &rarr;</label><br />
+		<input type="checkbox" name="obAttack1"><label> &rarr;</label><br />
+		<input type="checkbox" name="obAttack2"><label> &rarr;</label><br />
+		<input type="checkbox" name="obArmor"><label> &rarr;</label><br />
+		<input type="checkbox" name="obKinetic"><label> &rarr;</label><br />
+		<input type="checkbox" name="obEnergy"><label> &rarr;</label><br />
+		<input type="checkbox" name="obBlast"><label> &rarr;</label><br />
+		<input type="checkbox" name="obHeat"><label> &rarr;</label><br />
+		<input type="checkbox" name="obCold"><label> &rarr;</label><br />
+		<input type="checkbox" name="obElectric"><label> &rarr;</label><br />
+		<input type="checkbox" name="obAcid"><label> &rarr;</label><br />
+		<input type="checkbox" name="obStun"><label> &rarr;</label><br />
+		<input type="checkbox" name="obLightsaber"><label> &rarr;</label><br />
+	</div>
+
 	<div class="advsrccombatlabels">
+		<br />
 		<b>HAM:<br />
 		Damage:<br />
 		Chance to Hit:<br />
@@ -324,6 +364,7 @@
 	</div>
 
 	<div class="advsrccombat">
+		<br />
 		&nbsp;
 		<select name="oHam">
 			<option value=""></option>
@@ -501,7 +542,7 @@
 		<input type="number" name="nLightsaber" min="-1" max="500"><br />
 	</div>
 	
-	<div class="spacer" style="height:530px;">&nbsp;</div>
+	<div class="spacer" style="height:546px;">&nbsp;</div>
 	<pre>
 		To include an item on the results page use the Any drop down option or use &rsaquo;= [valid number] for number fields. 
 		For resistance vulnerabilities use a value of -1. Use a value of 0 for no resistance.</pre>

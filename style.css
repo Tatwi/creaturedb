@@ -391,7 +391,7 @@ input[type=submit]{
 .advsrcgenlabels{
 	position: absolute;
 	margin-left: 8px;
-	left : 0px;
+	left : 60px;
 	top: 72px;
 	line-height: 2;
 }
@@ -399,7 +399,7 @@ input[type=submit]{
 .advsrcgen{
 	position: absolute;
 	margin-left: 0px;
-	left : 100px;
+	left : 160px;
 	top: 72px;
 	line-height: 2;
 }
@@ -407,23 +407,23 @@ input[type=submit]{
 .advsrcbtnsleft{
 	position: absolute;
 	margin-left: 8px;
-	left : 30px;
-	top: 400px;
+	left : 50px;
+	top: 416px;
 	line-height: 2;
 }
 
 .advsrcbtnsright{
 	position: absolute;
 	margin-left: 0px;
-	left : 260px;
-	top: 400px;
+	left : 290px;
+	top: 416px;
 	line-height: 2;
 }
 
 .advsrccombatlabels{
 	position: absolute;
 	margin-left: 0px;
-	left : 550px;
+	left : 610px;
 	top: 72px;
 	line-height: 2;
 }
@@ -431,7 +431,27 @@ input[type=submit]{
 .advsrccombat{
 	position: absolute;
 	margin-left: 0px;
-	left : 710px;
+	left : 770px;
 	top: 72px;
 	line-height: 2;
+}
+
+.advsrcorderbyleft{
+	position: absolute;
+	margin-left: 8px;
+	width: 60px;
+	left : 0px;
+	top: 72px;
+	line-height: 2;
+	text-align: center;
+}
+
+.advsrcorderbyright{
+	position: absolute;
+	margin-left: 8px;
+	width: 60px;
+	left : 536px;
+	top: 72px;
+	line-height: 2;
+	text-align: center;
 }

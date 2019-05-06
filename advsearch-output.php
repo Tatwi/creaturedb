@@ -458,6 +458,91 @@
 			$pResists[$x] = true;
 		}
 	}
+	
+	// Add WHERE for conditions
+	$where = "";
+	if ($conditions != ""){
+		$where = "WHERE ";
+	}
+	
+	// Order By
+	$dir = "DESC";
+	if (isset($_POST["obAsc"])){
+		$dir = "ASC";
+	}
+	
+	// NULL prevents empty ORDER BY
+	$orderby = " ORDER BY NULL";
+	
+	if (isset($_POST["obPlanet"])){
+		$orderby = $orderby. ", Planet";
+	}
+	
+	if (isset($_POST["obLevel"])){
+		$orderby = $orderby. ", length(Level) $dir, Level $dir";
+	}
+	
+	if (isset($_POST["obXp"])){
+		$orderby = $orderby. ", length(Base_XP) $dir, Base_XP $dir";
+	}
+	
+	if (isset($_POST["obBone"])){
+		$orderby = $orderby. ", length(Bone_Amount) $dir, Bone_Amount $dir";
+	}
+	
+	if (isset($_POST["obHide"])){
+		$orderby = $orderby. ", length(Hide_Amount) $dir, Hide_Amount $dir";
+	}
+	
+	if (isset($_POST["obMeat"])){
+		$orderby = $orderby. ", length(Meat_Amount) $dir, Meat_Amount $dir";
+	}
+	
+	if (isset($_POST["obMilk"])){
+		$orderby = $orderby. ", length(Milk_Amount) $dir, Milk_Amount $dir";
+	}
+	
+	if (isset($_POST["obSocialGroup"])){
+		$orderby = $orderby. ", Social_Group";
+	}
+	
+	if (isset($_POST["obDiet"])){
+		$orderby = $orderby. ", Diet";
+	}
+	
+	if (isset($_POST["obHam"])){
+		$orderby = $orderby. ", length(Base_HAM) $dir, Base_HAM $dir";
+	}
+	
+	if (isset($_POST["obDamage"])){
+		$orderby = $orderby. ", length(Damage) $dir, Damage $dir";
+	}
+	
+	if (isset($_POST["obToHit"])){
+		$orderby = $orderby. ", length(Chance_to_Hit) $dir, Chance_to_Hit $dir";
+	}
+	
+	if (isset($_POST["obFerocity"])){
+		$orderby = $orderby. ", length(Ferocity) $dir, Ferocity $dir";
+	}
+	
+	if (isset($_POST["obAttack1"])){
+		$orderby = $orderby. ", Attack_1";
+	}
+	
+	if (isset($_POST["obAttack2"])){
+		$orderby = $orderby. ", Attack_2";
+	}
+	
+	if (isset($_POST["obArmor"])){
+		$orderby = $orderby. ", Armor";
+	}
+	
+	for ($x = 0; $x < 11; $x++){
+		if (isset($_POST["ob". $resists[$x]])){
+			$orderby = $orderby. ", length(". $resists[$x]. ") $dir, ". $resists[$x]. " $dir";
+		}
+	}
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -466,22 +551,11 @@
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	}
-	
-	// Add WHERE for conditions
-	$where = "";
-	if ($conditions != ""){
-		$where = "WHERE ";
-	}
 
 	//echo $conn->host_info . "<br>";
 
 	// NULL is there to eat the trailing comma left by $selections
-	$sql = "SELECT Creature_Name, ". $selections. " NULL FROM Tarkin_Creatures ". $where. $conditions. " ORDER BY Planet, length(Level), Level";
-	
-	// Debug
-	//echo "conditions: ". $conditions. "<br />";
-	//echo "lPlanet = ". $_POST["lPlanet"]. "<br />";
-	//echo "<br />Query: ". $sql. "<br /><br />";
+	$sql = "SELECT Creature_Name, ". $selections. " NULL FROM Tarkin_Creatures ". $where. $conditions. $orderby;
 	
 	$result = $conn->query($sql);
 	$answer = array();
