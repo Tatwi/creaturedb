@@ -1,10 +1,12 @@
 # Tarkin's Revenge Creature Database
-This is a SQL database driven web page that allows players to view and gather infomration about the various animals on the Tarkin's Revenge server. We felt it was neccasary to create this user friendly tool, due to the vast amount of updates and improvements that we've made to the creatures on Tarkin's Revenge.
+This is a SQL database driven web page that allows players to view and gather infomration about the various animals on the Tarkin's Revenge server. We felt it was neccasary to create this user friendly tool, due to the vast amount of updates and improvements that we've made to the creatures on Tarkin's Revenge.  
+
+[Visit the live site here!](http://creature.tarkinswg.com/)  
 
 ## Development Status
 
-*May 7th, 2019*  
-The software is functionally complete, however it missing the images for the creatures and it is not yet hosted to the public. Creature images will be added in batches over time, to the maximum extent of my sanity.  
+*May 21st, 2019*  
+The software is functionally complete, however I have not yet finished taking pictures of all the critters. Creature images will be added in batches over time, to the maximum extent of my sanity.  
 
 ## Requirements
 
@@ -15,7 +17,7 @@ The software is functionally complete, however it missing the images for the cre
 ## Credits
 
 - **Programming, Database, Design, Graphics:** [R. Bassett Jr. (Tatwi)](https://github.com/Tatwi/)
-- **Spreadsheet (Lua -> Excel):** [stacy19201325 (Liakhara)](https://github.com/stacy19201325)
+- **Spreadsheet (Lua -Excel):** [stacy19201325 (Liakhara)](https://github.com/stacy19201325)
 - **Graphics:** [Skolten](https://tarkinswg.com/index.php?/profile/7-skolten/)
 - **Database:** Generated from an Excel spreadsheet using [SQLizer](https://sqlizer.io)
 
@@ -24,29 +26,29 @@ The software is functionally complete, however it missing the images for the cre
 - Install your operating system, web server, and database software. Add PHP 7 and its MYSQL addon, as noted in the requirements section.  
 - Setup your database. This example is valid for 10.1.38-MariaDB for Debian Linux.  
 
-> In a terminal type:  
+In a terminal type:  
 
-> sudo mysql_secure_installation  
+sudo mysql_secure_installation  
 
-> Say "yes" to all the prompts and set the root user password. This initialized MYSQL (on a Debian-based system).  
+Say "yes" to all the prompts and set the root user password. This initialized MYSQL (on a Debian-based system).  
 
-> In a terminal type:  
+In a terminal type:  
 
-> echo 'CREATE DATABASE creatures;' | sudo mysql -uroot -p123456  
+echo 'CREATE DATABASE creatures;' | sudo mysql -uroot -p123456  
 
-> Where -p123456 is the password you set for the root user. This creates the database.  
+Where -p123456 is the password you set for the root user. This creates the database.  
 
-> In a terminal type:  
+In a terminal type:  
 
-> echo 'GRANT ALL ON *.* TO `youLocalUserName`@`localhost` IDENTIFIED BY "123456";' | sudo mysql -uroot -p123456  
+echo 'GRANT ALL ON *.* TO `youLocalUserName`@`localhost` IDENTIFIED BY "123456";' | sudo mysql -uroot -p123456  
 
-> Where youLocalUserName is your Linux user account and 123456 is your password. This grants your Linux user account access to the database.  
+Where youLocalUserName is your Linux user account and 123456 is your password. This grants your Linux user account access to the database.  
 
-> In a terminal type:  
+In a terminal type:  
 
-> mysql -uMyName -p123456 -e source -e Tarkin_Creatures.sql  
+mysql -uMyName -p123456 -e source -e Tarkin_Creatures.sql  
 
-> Finally, this populates the database with the creature data.  
+Finally, this populates the database with the creature data.  
 
 - Create a new directory on your website where the page will be hosted, such as creaturedb. This will show to the outside world as mywebpage.com/creaturedb/  
 
@@ -54,17 +56,17 @@ The software is functionally complete, however it missing the images for the cre
 
 - **Extra:** If you are concerned about the security of your SQL database and you're using an Apache web server, you can move the dbinfo.php file to a directory called "include", and change the path to it in all the files where it is referenced from  
 
-> <?php include("dbinfo.php"); ?>  
+<?php include("dbinfo.php"); ? 
 
-> to   
+to   
 
-> <?php include("include/dbinfo.php"); ?>  
+<?php include("include/dbinfo.php"); ? 
 
-> After that, add a file called .htaccess inside the include directory that contains the following code to prevent outside users from accessing anything in the include directory  
+After that, add a file called .htaccess inside the include directory that contains the following code to prevent outside users from accessing anything in the include directory  
 
-> Deny from all
+Deny from all
 
-> If you're using a different web server, you may wish to look into how it accomplishes the same task. I didn't do it this way by default, because some folks don't use Apache and it's not strictly necessary for the software to function.  
+If you're using a different web server, you may wish to look into how it accomplishes the same task. I didn't do it this way by default, because some folks don't use Apache and it's not strictly necessary for the software to function.  
 
 Provided the file permissions are all correct for your web server and so forth, the Creature Database will now be up and running!
 
