@@ -1,44 +1,11 @@
 <?php include("design-top.php"); ?>
 <?php include("dbinfo.php"); ?>
+<?php include("functions_before.php"); ?>
 
 <div class="contentbox">
 	<div class="contentboxtitle"><span>Quick Answers</span></div>
 
-	<script type="text/javascript">
-		function loadCreaturePage(arg1){
-			var pg = "creaturepage.php?argument1=" + arg1;
-			window.open(pg);
-		}
-	</script>
-	
 	<?php
-	// Helper functions
-	function makePretty($value){
-		return ucwords(strtolower(str_replace("_", " ", $value)));
-	}
-	
-	function resistPretty($value){
-		$resistvalue = number_format($value);
-		if ($resistvalue == -1){
-			$resistvalue = "Vulnerable";
-		}
-		
-		return $resistvalue;
-	}
-	
-	function armorRatingIs($value){
-		$armorrating = "None";
-		if ($value == 1){
-			$armorrating = "Light";
-		} else if ($value == 2){
-			$armorrating = "Medium";
-		} else if ($value == 3){
-			$armorrating = "Heavy";
-		}
-		
-		return $armorrating;
-	}
-	
 	echo "<h2>What animal missions give the most XP on ". $_POST["planet"]. " when using ". $_POST["damage"]. " damage with Armor Piercing ". armorRatingIs($_POST["ap"]). "?</h2>";
 
 	// Create connection
@@ -68,13 +35,20 @@
 	
 	$answersize = count($answer);
 
-	echo "<table border='1'><tr><th>Creature Name</th><th>Level</th><th>Armor Rating</th><th>". $_POST["damage"]." Resistance</th><th>XP Amount</th></tr>";
+	echo "<table id='theTable'><tr>
+	<th>Creature Name</th>
+	<th>Level</th>
+	<th>Armor Rating</th>
+	<th>". $_POST["damage"]." Resistance</th>
+	<th>XP Amount</th>
+	</tr>";
 	for ($x = 0; $x < $answersize; $x++) {
 		echo "<tr>
 		<td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td>
 		<td>". number_format($answer[$x]["Level"]). "</td>
 		<td>". armorRatingIs($answer[$x]["Armor"]). "</td>
-		<td>". resistPretty($answer[$x][$_POST["damage"]]). "</td><td>". number_format($answer[$x]["Base_XP"]). "</td>
+		<td>". resistPretty($answer[$x][$_POST["damage"]]). "</td>
+		<td>". formatInt($answer[$x]["Base_XP"]). "</td>
 		</tr>";
 	}
 	echo "</table><br />";
@@ -84,4 +58,5 @@
 	<pre><a href="index.php">Back to main page ...</a></pre>
 </div>
 
+<?php include("functions_after.php"); ?>
 <?php include("design-bottom.php"); ?>

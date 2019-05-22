@@ -50,6 +50,10 @@ th, td {
   text-align: center;
 }
 
+th {
+	cursor: pointer;
+}
+
 .maincontainer{
 	position: absolute;
 	width: 1350px;

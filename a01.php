@@ -1,15 +1,9 @@
 <?php include("design-top.php"); ?>
 <?php include("dbinfo.php"); ?>
+<?php include("functions_before.php"); ?>
 
 <div class="contentbox">
 	<div class="contentboxtitle"><span>Quick Answers</span></div>
-
-	<script type="text/javascript">
-		function loadCreaturePage(arg1){
-			var pg = "creaturepage.php?argument1=" + arg1;
-			window.open(pg);
-		}
-	</script>
 
 	<h2>What creature drops 
 	<?php
@@ -52,14 +46,19 @@
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
-		echo "<table border='1'><tr><th>Creature Name</th><th>Level</th><th>Quantity</th><th>Missions</th></tr>";
+		echo "<table id='theTable'><tr>
+		<th>Creature Name</th>
+		<th>Level</th>
+		<th>Quantity</th>
+		<th>Missions</th>
+		</tr>";
 		
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
 			echo "</tr>
 			<td><a href='#' onclick='loadCreaturePage(\"". $row["Creature_Name"] . "\")'>". ucwords(str_replace("_", " ", $row["Creature_Name"])). "</a></td>
 			<td>" . number_format($row["Level"]) . "</td>
-			<td>" . number_format($row[$resamount]) . "</td>
+			<td>" . formatInt($row[$resamount]) . "</td>
 			<td>" . $row["Missions_Available"] . "</td>
 			</tr>";
 		}
@@ -74,5 +73,6 @@
 	<pre><a href="index.php">Back to main page ...</a></pre>
 </div>
 
+<?php include("functions_after.php"); ?>
 <?php include("design-bottom.php"); ?>
 

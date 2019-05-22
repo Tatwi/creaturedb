@@ -13,6 +13,7 @@
 		<br />
 	</div>
 <?php include("dbinfo.php"); ?>
+<?php include("functions_before.php"); ?>
 
 <div class="advsearchresult">
 	<div class="advsearchtitle"><span>Advanced Search Results</span></div>
@@ -25,78 +26,6 @@
 	</script>
 
 	<?php
-	// Helper Functions
-	function makePretty($value){
-		return ucwords(strtolower(str_replace("_", " ", $value)));
-	}
-	
-	function resistPretty($value){
-		$resistvalue = number_format($value);
-		if ($resistvalue == -1){
-			$resistvalue = "Vulnerable";
-		}
-		
-		return $resistvalue;
-	}
-	
-	function armorRatingIs($value){
-		$armorrating = "None";
-		if ($value == 1){
-			$armorrating = "Light";
-		} else if ($value == 2){
-			$armorrating = "Medium";
-		} else if ($value == 3){
-			$armorrating = "Heavy";
-		}
-		
-		return $armorrating;
-	}
-	
-	function specialAttackIs($value){
-		if ($value == ""){
-			return "None";
-		}  else if ($value == "creatureareacombo"){
-			return "Area Combo";
-		} else if ($value == "blindattack"){
-			return "Blinding Strike";
-		} else if ($value == "creatureareaattack"){
-			return "Creature Area Attack";
-		} else if ($value == "posturedownattack"){
-			return "Crippling Strike";
-		} else if ($value == "dizzyattack"){
-			return "Dizzy Strike";
-		} else if ($value == "creatureareaknockdown"){
-			return "Force Strike";
-		} else if ($value == "intimidationattack"){
-			return "Intimidation";
-		} else if ($value == "knockdownattack"){
-			return "Knockdown";
-		} else if ($value == "mediumdisease"){
-			return "Medium Disease";
-		} else if ($value == "mediumpoison"){
-			return "Medium Poison";
-		} else if ($value == "milddisease"){
-			return "Mild Disease";
-		} else if ($value == "mildpoison"){
-			return "Mild Poison";
-		} else if ($value == "creatureareableeding"){
-			return "Open Wounds";
-		} else if ($value == "creatureareadisease"){
-			return "Plague Strike";
-		} else if ($value == "creatureareapoison"){
-			return "Poison Spray";
-		} else if ($value == "strongdisease"){
-			return "Strong Disease";
-		} else if ($value == "strongpoison"){
-			return "Strong Poison";
-		} else if ($value == "stunattack"){
-			return "Stunning Strike";
-		} 
-		
-		// There are a few cases the value will be NA
-		return $value;
-	}
-	
 	// Input: $conditions, $_POST["oLevel"], $_POST["nLevel"], " Level "
 	function getConditions($con, $op, $num, $str){
 		$retvalue = $con;
@@ -380,12 +309,12 @@
 	if ($_POST["oDamage"] != "" && $_POST["nDamage"] > 0 && !isset($_POST["bDamage"])){
 		$selections = $selections. " Min_Damage, Max_Damage, ";
 		$conditions = getConditions($conditions, $_POST["oDamage"], $_POST["nDamage"], " Max_Damage ");
-		$headings = $headings. "<th>Damage</th>";
+		$headings = $headings. "<th>Min Damage</th><th>Max Damage</th>";
 		$pDamage = true;
 	} else if ($_POST["oDamage"] != "" && $_POST["nDamage"] > 0 && isset($_POST["bDamage"])){
 		$selections = $selections. " Min_Damage, Max_Damage, ";
 		$conditions = getConditions($conditions, $_POST["oDamage"], $_POST["nDamage"], " Min_Damage ");
-		$headings = $headings. "<th>Damage</th>";
+		$headings = $headings. "<th>Min Damage</th><th>Max Damage</th>";
 		$pDamage = true;
 	}
 	
@@ -574,7 +503,7 @@
 	$answersize = count($answer);
 	
 	if ($results){
-		echo "<br /><table><tr><th>Creature Name</th>". $headings. "</tr>";
+		echo "<br /><table id='theTable'><tr><th>Creature Name</th>". $headings. "</tr>";
 		for ($x = 0; $x < $answersize; $x++) {
 			echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td>";
 			
@@ -587,23 +516,23 @@
 			}
 			
 			if ($pXp){
-				echo "<td>". number_format($answer[$x]["Base_XP"]). "</td>";
+				echo "<td>". formatInt($answer[$x]["Base_XP"]). "</td>";
 			}
 			
 			if ($pBone){
-				echo "<td>". str_replace("Bone", "", makePretty($answer[$x]["Bone_Type"])). "</td><td>". number_format($answer[$x]["Bone_Amount"]). "</td>";
+				echo "<td>". str_replace("Bone", "", makePretty($answer[$x]["Bone_Type"])). "</td><td>". formatInt($answer[$x]["Bone_Amount"]). "</td>";
 			}
 			
 			if ($pHide){
-				echo "<td>". str_replace("Hide", "", makePretty($answer[$x]["Hide_Type"])). "</td><td>". number_format($answer[$x]["Hide_Amount"]). "</td>";
+				echo "<td>". str_replace("Hide", "", makePretty($answer[$x]["Hide_Type"])). "</td><td>". formatInt($answer[$x]["Hide_Amount"]). "</td>";
 			}
 			
 			if ($pMeat){
-				echo "<td>". str_replace("Meat", "", makePretty($answer[$x]["Meat_Type"])). "</td><td>". number_format($answer[$x]["Meat_Amount"]). "</td>";
+				echo "<td>". str_replace("Meat", "", makePretty($answer[$x]["Meat_Type"])). "</td><td>". formatInt($answer[$x]["Meat_Amount"]). "</td>";
 			}
 			
 			if ($pMilk){
-				echo "<td>". str_replace("Milk", "", makePretty($answer[$x]["Milk_Type"])). "</td><td>". number_format($answer[$x]["Milk_Amount"]). "</td>";
+				echo "<td>". str_replace("Milk", "", makePretty($answer[$x]["Milk_Type"])). "</td><td>". formatInt($answer[$x]["Milk_Amount"]). "</td>";
 			}
 			
 			if ($pSocialGroup){
@@ -619,7 +548,7 @@
 			}
 			
 			if ($pTamable){
-				echo "<td>". number_format($answer[$x]["Taming_Chance"] * 100). "%</td>";
+				echo "<td>". formatInt($answer[$x]["Taming_Chance"] * 100). "%</td>";
 			}
 			
 			if ($pMountable){
@@ -671,11 +600,11 @@
 			}
 			
 			if ($pHam){
-				echo "<td>". number_format($answer[$x]["Base_HAM"]). "</td>";
+				echo "<td>". formatInt($answer[$x]["Base_HAM"]). "</td>";
 			}
 			
 			if ($pDamage){
-				echo "<td>". number_format($answer[$x]["Min_Damage"]). " - ".  number_format($answer[$x]["Max_Damage"]). "</td>";
+				echo "<td>". formatInt($answer[$x]["Min_Damage"]). "</td><td>". formatInt($answer[$x]["Max_Damage"]). "</td>";
 			}
 			
 			if ($pToHit){
@@ -683,7 +612,7 @@
 			}
 			
 			if ($pFerocity){
-				echo "<td>". number_format($answer[$x]["Ferocity"]). "</td>";
+				echo "<td>". formatInt($answer[$x]["Ferocity"]). "</td>";
 			}
 			
 			if ($pAttack1){
@@ -700,7 +629,7 @@
 			
 			for ($y = 0; $y < 11; $y++){
 				if ($pResists[$y]){
-					echo "<td>". number_format($answer[$x][$resists[$y]]). "</td>";
+					echo "<td>". formatInt($answer[$x][$resists[$y]]). "</td>";
 				}
 			}
 			
@@ -721,5 +650,5 @@
 	<pre><a href="index.php">Back to main page ...</a></pre>
 </div>
 
+<?php include("functions_after.php"); ?>
 <?php include("design-bottom.php"); ?>
-

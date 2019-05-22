@@ -1,44 +1,11 @@
 <?php include("design-top.php"); ?>
 <?php include("dbinfo.php"); ?>
+<?php include("functions_before.php"); ?>
 
 <div class="contentbox">
 	<div class="contentboxtitle"><span>Quick Answers</span></div>
 
-	<script type="text/javascript">
-		function loadCreaturePage(arg1){
-			var pg = "creaturepage.php?argument1=" + arg1;
-			window.open(pg);
-		}
-	</script>
-	
 	<?php
-	// Helper functions
-	function makePretty($value){
-		return ucwords(strtolower(str_replace("_", " ", $value)));
-	}
-	
-	function resistPretty($value){
-		$resistvalue = number_format($value);
-		if ($resistvalue == -1){
-			$resistvalue = "Vulnerable";
-		}
-		
-		return $resistvalue;
-	}
-	
-	function armorRatingIs($value){
-		$armorrating = "None";
-		if ($value == 1){
-			$armorrating = "Light";
-		} else if ($value == 2){
-			$armorrating = "Medium";
-		} else if ($value == 3){
-			$armorrating = "Heavy";
-		}
-		
-		return $armorrating;
-	}
-	
 	echo "<h2>What's the easiest way to collect ". makePretty($_POST["resource"]). " using ". $_POST["damage"]. " damage with Armor Piercing ". armorRatingIs($_POST["ap"]). "?</h2>";
 	
 	$restype = "";
@@ -128,7 +95,14 @@
 	echo "<pre>Due to the nature of the question, these results exclude animals that are aggressive, that will assist each other, or that will death blow.</pre>";
 	
 	$easist = $answer[$tmpeasy];
-	echo "<p><b>Easiest:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Armor Rating</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th><th>Units/Minute</th><th>Missions</th></tr>";
+	echo "<p><b>Easiest:</b></p><table id='noSort1'><tr>
+	<th>Creature Name</th>
+	<th>Planet</th>
+	<th>Quantity</th>
+	<th>Armor Rating</th>
+	<th>". $_POST["damage"]. " Resistance</th>
+	<th>HAM</th><th>Units/Minute</th>
+	<th>Missions</th></tr>";
 	echo "<tr>
 	<td><a href='#' onclick='loadCreaturePage(\"". $easist["Creature_Name"] . "\")'>". makePretty($easist["Creature_Name"]). "</a></td>
 	<td>". $easist["Planet"]. "</td>
@@ -142,7 +116,15 @@
 	echo "</table><br />";
 	
 	$efficient = $answer[$tmpeff];
-	echo "<p><b>Most Effecient:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Armor Rating</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th><th>Units/Minute</th><th>Missions</th></tr>";
+	echo "<p><b>Most Effecient:</b></p><table id='noSort2'><tr>
+	<th>Creature Name</th>
+	<th>Planet</th>
+	<th>Quantity</th>
+	<th>Armor Rating</th>
+	<th>". $_POST["damage"]. " Resistance</th>
+	<th>HAM</th><th>Units/Minute</th>
+	<th>Missions</th>
+	</tr>";
 	echo "<tr>
 	<td><a href='#' onclick='loadCreaturePage(\"". $efficient["Creature_Name"] . "\")'>". makePretty($efficient["Creature_Name"]). "</a></td>
 	<td>". $efficient["Planet"]. "</td>
@@ -156,7 +138,16 @@
 	echo "</table><br />";
 	
 	$mostperkill = $answer[$tmpmost];
-	echo "<p><b>Largest Quanity Per Kill:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Armor Rating</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th><th>Units/Minute</th><th>Missions</th></tr>";
+	echo "<p><b>Largest Quanity Per Kill:</b></p><table id='noSort3'><tr>
+	<th>Creature Name</th>
+	<th>Planet</th>
+	<th>Quantity</th>
+	<th>Armor Rating</th>
+	<th>". $_POST["damage"]. " Resistance</th>
+	<th>HAM</th>
+	<th>Units/Minute</th>
+	<th>Missions</th>
+	</tr>";
 	echo "<tr>
 	<td><a href='#' onclick='loadCreaturePage(\"". $mostperkill["Creature_Name"] . "\")'>". makePretty($mostperkill["Creature_Name"]). "</a></td>
 	<td>". $mostperkill["Planet"]. "</td><td>". number_format($mostperkill[$qnty]). "</td>
@@ -168,16 +159,26 @@
 	</tr>";
 	echo "</table><br />";
 	
-	echo "<p><b>Everything of Note:</b></p><table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Quantity</th><th>Armor Rating</th><th>". $_POST["damage"]. " Resistance</th><th>HAM</th><th>Units/Minute</th><th>Missions</th></tr>";
+	echo "<p><b>Everything of Note:</b></p><table id='theTable'><tr>
+	<th>Creature Name</th>
+	<th>Planet</th>
+	<th>Quantity</th>
+	<th>Armor Rating</th>
+	<th>". $_POST["damage"]. " Resistance</th>
+	<th>HAM</th>
+	<th>Units/Minute</th>
+	<th>Missions</th>
+	</tr>";
 	for ($x = 0; $x < $answersize; $x++) {
 		if ($answer[$x][$qnty] >= $easist[$qnty]){
 			echo "<tr>
 			<td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td>
-			<td>". $answer[$x]["Planet"]. "</td><td>". number_format($answer[$x][$qnty]). "</td>
+			<td>". $answer[$x]["Planet"]. "</td>
+			<td>". formatInt($answer[$x][$qnty]). "</td>
 			<td>". armorRatingIs($answer[$x]["Armor"]). "</td>
 			<td>". resistPretty($answer[$x][$_POST["damage"]]). "</td>
-			<td>". number_format($answer[$x]["Base_HAM"]). "</td>
-			<td>". number_format($answer[$x]["Units_Per_Minute"]). "</td>
+			<td>". formatInt($answer[$x]["Base_HAM"]). "</td>
+			<td>". formatInt($answer[$x]["Units_Per_Minute"]). "</td>
 			<td>". $answer[$x]["Missions_Available"]. "</td>
 			</tr>";
 		}
@@ -200,4 +201,5 @@
 	</pre>
 </div>
 
+<?php include("functions_after.php"); ?>
 <?php include("design-bottom.php"); ?>

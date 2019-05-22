@@ -1,22 +1,11 @@
 <?php include("design-top.php"); ?>
 <?php include("dbinfo.php"); ?>
+<?php include("functions_before.php"); ?>
 
 <div class="contentbox">
 	<div class="contentboxtitle"><span>Quick Answers</span></div>
 
-	<script type="text/javascript">
-		function loadCreaturePage(arg1){
-			var pg = "creaturepage.php?argument1=" + arg1;
-			window.open(pg);
-		}
-	</script>
-	
 	<?php
-	// Helper functions
-	function makePretty($value){
-		return ucwords(strtolower(str_replace("_", " ", $value)));
-	}
-	
 	echo "<h2>Which creatures are only usable by Creature Handlers? </h2>";
 
 	// Create connection
@@ -47,13 +36,24 @@
 	$answersize = count($answer);
 	$aggressive = "No";
 
-	echo "<table border='1'><tr><th>Creature Name</th><th>Planet</th><th>Level</th><th>Aggressive</th><th>Mountable</th></tr>";
+	echo "<table id='theTable'><tr>
+	<th>Creature Name</th>
+	<th>Planet</th>
+	<th>Level</th>
+	<th>Aggressive</th>
+	<th>Mountable</th>
+	</tr>";
 	for ($x = 0; $x < $answersize; $x++) {
 		if (strpos($answer[$x]["PVP_Bitmask"], 'AGGRESSIVE') !== false) {
 			$aggressive = "Yes";
 		}
 			
-		echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td><td>". $answer[$x]["Planet"]. "</td><td>". number_format($answer[$x]["Level"]). "</td><td>". $aggressive. "</td><td>". $answer[$x]["Mount"]. "</td></tr>";
+		echo "<tr><td><a href='#' onclick='loadCreaturePage(\"". $answer[$x]["Creature_Name"] . "\")'>". makePretty($answer[$x]["Creature_Name"]). "</a></td>
+		<td>". $answer[$x]["Planet"]. "</td>
+		<td>". number_format($answer[$x]["Level"]). "</td>
+		<td>". $aggressive. "</td>
+		<td>". $answer[$x]["Mount"]. "</td>
+		</tr>";
 	}
 	echo "</table><br />";
 	
@@ -62,4 +62,5 @@
 	<pre><a href="index.php">Back to main page ...</a></pre>
 </div>
 
+<?php include("functions_after.php"); ?>
 <?php include("design-bottom.php"); ?>
