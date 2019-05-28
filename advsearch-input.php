@@ -32,7 +32,7 @@
 	
 	<div class="advsrcgenlabels">
 		<br />
-		<b>Planet:<br />
+		Planet:<br />
 		Level:<br />
 		XP:<br />
 		Bone:<br />
@@ -40,7 +40,7 @@
 		Meat:<br />
 		Milk:<br />
 		Social Group:<br />
-		Diet:</b><br />
+		Diet:<br />
 	</div>
 	
 	<div class="advsrcgen">
@@ -305,7 +305,14 @@
 	</div>	
 		
 	<div class="advsrcbtnsleft">
-		<input type="checkbox" name="bMissions"><label>Missions Available</label><br />
+		Missions Available:&nbsp;
+		<select name="lMissions">
+			<option value="" style="min-width:140px"></option>
+			<option value="any">Any</option>
+			<option value="Yes">Yes</option>
+			<option value="No">No</option>
+		</select><br />
+		
 		<input type="checkbox" name="bTamable"><label>Tamable</label><br />
 		<input type="checkbox" name="bMountable"><label>Mountable</label><br />
 		<input type="checkbox" name="bDna"><label>Can Sample DNA</label><br />
@@ -316,10 +323,38 @@
 	</div>
 	
 	<div class="advsrcbtnsright">
-		Aggressive:&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bAggressiveYes"><label>Yes</label> <input type="checkbox" name="bAggressiveNo"><label>No</label><br />
-		Deathblows:&nbsp;&nbsp;<input type="checkbox" name="bDeathblowsYes"><label>Yes</label> <input type="checkbox" name="bDeathblowsNo"><label>No</label><br />
-		Assists Allies:&nbsp;<input type="checkbox" name="bAssistsYes"><label>Yes</label> <input type="checkbox" name="bAssistsNo"><label>No</label><br />
-		Stalks Prey:&nbsp;&nbsp;&nbsp;<input type="checkbox" name="bStalksYes"><label>Yes</label> <input type="checkbox" name="bStalksNo"><label>No</label><br />
+		Aggressive:&nbsp;&nbsp;&nbsp;&nbsp;
+		<select name="lAggressive">
+			<option value="" style="min-width:140px"></option>
+			<option value="any">Any</option>
+			<option value="Yes">Yes</option>
+			<option value="No">No</option>
+		</select><br />
+		
+		Deathblows:&nbsp;&nbsp;
+		<select name="lDeathblows">
+			<option value="" style="min-width:140px"></option>
+			<option value="any">Any</option>
+			<option value="Yes">Yes</option>
+			<option value="No">No</option>
+		</select><br />
+		
+		Assists Allies:&nbsp;
+		<select name="lAssists">
+			<option value="" style="min-width:140px"></option>
+			<option value="any">Any</option>
+			<option value="Yes">Yes</option>
+			<option value="No">No</option>
+		</select><br />
+		
+		Stalks Prey:&nbsp;&nbsp;&nbsp;&nbsp;
+		<select name="lStalks">
+			<option value="" style="min-width:140px"></option>
+			<option value="any">Any</option>
+			<option value="Yes">Yes</option>
+			<option value="No">No</option>
+		</select><br />
+		
 		<input type="checkbox" name="bRanged"><label>Has Ranged Attack</label><br />
 	</div>
 
@@ -345,7 +380,7 @@
 
 	<div class="advsrccombatlabels">
 		<br />
-		<b>HAM:<br />
+		HAM:<br />
 		Damage:<br />
 		Chance to Hit:<br />
 		Ferocity:<br />
@@ -360,7 +395,7 @@
 		Electric Resistance:<br />
 		Acid Resistance:<br />
 		Stun Resistance:<br />
-		Lightsaber Resistance:</b><br />
+		Lightsaber Resistance:<br />
 	</div>
 
 	<div class="advsrccombat">
