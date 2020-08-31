@@ -1,12 +1,7 @@
 # Tarkin's Revenge Creature Database
 This is a SQL database driven web page that allows players to view and gather infomration about the various animals on the Tarkin's Revenge server. We felt it was neccasary to create this user friendly tool, due to the vast amount of updates and improvements that we've made to the creatures on Tarkin's Revenge.  
 
-[Visit the live site here!](http://creature.tarkinswg.com/)  
-
-## Development Status
-
-*May 21st, 2019*  
-The software is functionally complete, however I have not yet finished taking pictures of all the critters. Creature images will be added in batches over time, to the maximum extent of my sanity.  
+[Visit the live site here!](http://creature.tarkinswg.com/)   
 
 ## Requirements
 
@@ -169,20 +164,4 @@ If you have a look at advsearch-input.php, you will find that it has all the sta
 1. Using the form input to build an SQL query.
 2. Displaying the results of the query to the user in a human readable format.  
 
-As far as adding the Bio-Engineer crafting data to the creature's "hockey card" page, that only requires some thought as to where to place it on the page and then adding the results handling in the same manner as the other data on the page. For that page the query is already configured to grab all data columns for the given creature name, so you'd really just have to put the code in to display it (using the existing code as an example of how to do so).  
-
-## Current Screenshots
-
-![Quick Questions](https://tatwi.files.wordpress.com/2019/05/creature_database05.png) 
-
-![Quick Answer](https://tatwi.files.wordpress.com/2019/05/creature_database06.png) 
-
-![Advanced Search](https://tatwi.files.wordpress.com/2019/05/creature_database04.jpg) 
-
-## Development Screenshots
-
-![Still in development](https://tatwi.files.wordpress.com/2019/05/creature_database01.jpg)  
-
-![Still in development](https://tatwi.files.wordpress.com/2019/05/creature_database02.jpg)  
-
-![Still in development](https://tatwi.files.wordpress.com/2019/05/creature_database03.jpg) 
+As far as adding the Bio-Engineer crafting data to the creature's "hockey card" page, that only requires some thought as to where to place it on the page and then adding the results handling in the same manner as the other data on the page. For that page the query is already configured to grab all data columns for the given creature name, so you'd really just have to put the code in to display it (using the existing code as an example of how to do so). 
